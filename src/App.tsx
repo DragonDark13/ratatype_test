@@ -15,7 +15,7 @@ const App = () => {
         <ThemeProvider theme={themeCurrent === "dark" ? themeDark : themeLight}>
             <GlobalCssDark/>
             {themeCurrent === "dark" ? <GlobalCssDark/> : <GlobalCssLight/>}
-            <MainPage themeCurrent={themeCurrent}/>
+            <MainPage setThemeCurrent={setThemeCurrent} themeCurrent={themeCurrent}/>
         </ThemeProvider>
     );
 }

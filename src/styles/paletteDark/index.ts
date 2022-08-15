@@ -1,3 +1,5 @@
+import {alpha} from "@mui/material/styles";
+
 export const COLORS = {
     LINK: '#4C7BD9',
     DEFAULT: '#2c2c2c',
@@ -6,7 +8,7 @@ export const COLORS = {
 
 export default {
     primary: {
-        light: '#7CC576',
+        light: '#fff',
         main: '#fff',
         dark: '#186937',
         hover: '#EBF6EF',
@@ -23,9 +25,12 @@ export default {
         main: '#FF5252',
         light: '#FFEEEE'
     },
-
+    divider:"#9FB8C6",
     background: {
         default: '#0A335C',
-        paper: '#F7F9FC'
+        paper: COLORS.prussianBlue,
     },
+      action:{
+        hover: alpha("#fff",0.1),
+    }
 };

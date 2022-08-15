@@ -36,13 +36,15 @@ import {
 } from "@mui/material";
 
 import {useMainPageStyles} from "./mainPageStyles";
+import {ArrowDown, HamburgerIcon} from "../icons";
 
 
 export interface IMainPage {
+    setThemeCurrent: (state: any) => void;
     themeCurrent: "dark" | "light";
 }
 
-const MainPage = ({themeCurrent}: IMainPage) => {
+const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     const theme = useTheme();
     const classes = useMainPageStyles();
@@ -86,17 +88,34 @@ const MainPage = ({themeCurrent}: IMainPage) => {
         <img src={restart} alt="restart"/>
     </IconButton>;
 
-    const darkModeBtn = <IconButton
-        size={"small"}
-    >
-        <img src={dark_mode} alt="dark_mode"/>
-    </IconButton>;
+    const onSwitchTheme = () => {
+        if (themeCurrent === "light") {
+            setThemeCurrent("dark")
+        } else {
+            setThemeCurrent("light")
+        }
+    }
 
-    const lightModeBtn = <IconButton
-        size={"small"}
-    >
-        <img src={light_mode} alt="light_mode"/>
-    </IconButton>;
+    const SwitchThemeModeBtn =
+        <IconButton
+            onClick={onSwitchTheme}
+            size={"small"}
+        >
+            {
+                themeCurrent === "light"
+                    ?
+                    <img src={dark_mode} alt="dark_mode"/>
+                    :
+                    <img src={light_mode} alt="light_mode"/>
+            }
+
+        </IconButton>;
+
+    // const lightModeBtn = <IconButton
+    //     size={"small"}
+    // >
+    //     <img src={light_mode} alt="light_mode"/>
+    // </IconButton>;
 
 
     const buttonContainer = <Grid
@@ -108,12 +127,7 @@ const MainPage = ({themeCurrent}: IMainPage) => {
             {restartBtn}
         </Grid>
         <Grid item xs={"auto"}>
-            {themeCurrent === "dark"
-                ?
-                lightModeBtn
-                :
-                darkModeBtn
-            }
+            {SwitchThemeModeBtn}
         </Grid>
     </Grid>;
 
@@ -178,7 +192,10 @@ const MainPage = ({themeCurrent}: IMainPage) => {
                                             </ListItemButton>
                                         ))}
                                         <ListItemButton
-                                            className={openPopover ? classes.listItemHasOpenPopover : undefined}
+                                            className={openPopover ?
+                                                (themeCurrent === "dark" ? classes.listItemHasOpenPopoverDark : classes.listItemHasOpenPopover)
+                                                :
+                                                undefined}
                                             ref={toggleMenuBlock}
                                             aria-describedby={id}
                                             onClick={handleClick}
@@ -189,8 +206,8 @@ const MainPage = ({themeCurrent}: IMainPage) => {
                                             }}
                                         >
                                             <Typography>Більше</Typography>
-                                            <ListItemIcon>
-                                                <img src={arrow_down} alt="arrow_down"/>
+                                            <ListItemIcon className={classes.hamburgerButton}>
+                                                <ArrowDown/>
                                             </ListItemIcon>
                                         </ListItemButton>
                                     </List>
@@ -211,7 +228,8 @@ const MainPage = ({themeCurrent}: IMainPage) => {
                                     >
                                         <MenuList disablePadding>
                                             {smallMenuArray.map(({title, href}, key) =>
-                                                <MenuItem href={href} onClick={handleClose}
+                                                <MenuItem className={classes.popoverListItem} href={href}
+                                                          onClick={handleClose}
                                                           key={title}>{title}</MenuItem>
                                             )}
                                         </MenuList>
@@ -235,8 +253,9 @@ const MainPage = ({themeCurrent}: IMainPage) => {
                             </Grid>
                             :
                             <Grid item xs={"auto"}>
-                                {<IconButton onClick={openMobileHeaderDrawer} size={"small"}>
-                                    <img src={burger_menu} alt="burger_menu"/>
+                                {<IconButton className={classes.hamburgerButton}
+                                             onClick={openMobileHeaderDrawer} size={"small"}>
+                                    <HamburgerIcon/>
                                 </IconButton>}
                             </Grid>
                         }
@@ -304,7 +323,7 @@ const MainPage = ({themeCurrent}: IMainPage) => {
                                     >
                                         <ListItemText
                                             className={classes.mobileMainMenuItemText}
-                                            classes={{primary:classes.mobileMainMenuItemText}}
+                                            classes={{primary: classes.mobileMainMenuItemText}}
                                             primary={title}/>
                                     </ListItemButton>
                                     <Divider light component={"li"}/>
@@ -322,13 +341,8 @@ const MainPage = ({themeCurrent}: IMainPage) => {
                                     className={classes.mobileListItem}
                                 >
                                     <ListItemText
-                                        sx={{margin: 0}}
-                                        primaryTypographyProps={{
-                                            color: "#FFF",
-                                            fontSize: theme.spacing(3),
-                                            fontWeight: 500,
-                                            lineHeight: 1.5,
-                                        }}
+                                        className={classes.mobileSmallMenuItemText}
+                                        classes={{primary: classes.mobileSmallMenuItemText}}
                                         primary={title}/>
                                 </ListItemButton>
                             ))}
@@ -356,12 +370,10 @@ const MainPage = ({themeCurrent}: IMainPage) => {
 
                         </Grid>
                     </Grid>
-
                 </Container>
-
-
             </Drawer>
-            }        </React.Fragment>
+            }
+        </React.Fragment>
     );
 }
 

@@ -2,12 +2,13 @@ export const COLORS = {
     LINK: '#4C7BD9',
     DEFAULT: '#2c2c2c',
     prussianBlue: "#0A335C",
+    primaryDeepSky:"#00ACFF",
 };
 
 export default {
     primary: {
-        light: '#7CC576',
-        main: '#0A335C',
+        light: COLORS.primaryDeepSky,
+        main: COLORS.prussianBlue,
         dark: '#186937',
         hover: '#EBF6EF',
         contrastText: '#fff'
@@ -23,9 +24,12 @@ export default {
         main: '#FF5252',
         light: '#FFEEEE'
     },
-
+    divider:"#E6EBEF",
     background: {
         default: '#FFFFFF',
-        paper: '#F7F9FC'
+        paper: '#fff'
     },
+    action:{
+        hover:"#F3F5F7",
+    }
 };

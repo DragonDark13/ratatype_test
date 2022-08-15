@@ -1,6 +1,4 @@
-import {alpha} from '@mui/material/styles';
 import {themeSpacing} from '../constants';
-import palette from "../palette"
 
 /**
  * Sets the absolute transparency of a color.
@@ -16,10 +14,11 @@ export default {
         root: {
             paddingBottom: themeSpacing[2] + "px",
             paddingTop: themeSpacing[2] + "px",
-            color: alpha(palette.primary.main, 0.64),
-            "&:hover": {
-                backgroundColor: "#E6EBEF",
-            }
+            fontWeight:500,
+
+            // "&:hover": {
+            //     backgroundColor: "#E6EBEF",
+            // }
         }
     }
 }

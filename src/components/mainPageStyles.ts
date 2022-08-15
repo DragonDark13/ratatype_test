@@ -3,6 +3,8 @@ import {createStyles} from "@mui/styles";
 import {Theme} from "@mui/material";
 import {customGridWidth} from "../utils/mixinsForStyle";
 import {alpha} from "@mui/material/styles";
+import palette from "../styles/palette";
+import themeDark from "../styles/themeDark";
 
 
 const albaImgSmSize = 96;
@@ -113,6 +115,17 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
                 background: "#F3F5F7",
             }
         },
+        listItemHasOpenPopoverDark: {
+            "&.MuiButtonBase-root": {
+                background: alpha(themeDark.palette.primary.contrastText,0.1),
+            }
+        },
+
+        popoverListItem: {
+            "&.MuiMenuItem-root": {
+                color: alpha(theme.palette.primary.main, 0.64),
+            }
+        },
 
         main: {
             paddingTop: theme.spacing(3),
@@ -138,12 +151,32 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
                 fontSize: theme.spacing(5),
                 fontWeight: 500,
                 lineHeight: 1.33,
+            }
+        },
 
-                [theme.breakpoints.up("sm")]: {
-                    // fontSize: theme.spacing(5),
-                }
+        mobileSmallMenuItemText: {
+
+            "&, &.MuiListItemText-root": {
+                margin: 0,
+            },
+
+            "&.MuiTypography-root": {
+                color: theme.palette.primary.contrastText,
+                fontSize: theme.spacing(3),
+                fontWeight: 500,
+                lineHeight: 1.5,
             }
 
+        },
+
+        hamburgerButton: {
+            "&.MuiIconButton-root": {
+                color: theme.palette.primary.light,
+            },
+
+            "&.MuiListItemIcon-root": {
+                color: theme.palette.primary.main,
+            }
         }
 
     }));

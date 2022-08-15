@@ -5,12 +5,9 @@ export default {
     styleOverrides: {
 
         paper: {
-            background: palette.primary.contrastText,
+            // background: palette.primary.contrastText,
             borderRadius: themeSpacing[2] + "px",
-            borderColor:"#E6EBEF",
-
-
-
+            // borderColor:"#E6EBEF",
         }
     },
 };
