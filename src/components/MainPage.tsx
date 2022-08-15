@@ -1,0 +1,368 @@
+import React, {useState} from 'react';
+import header_icon_light from '../image/light/header_icon_light.svg'
+import header_icon_dark from '../image/dark/header_icon_dark.svg'
+import header_icon_light_mob from '../image/light/header_icon_light_mob.svg'
+import header_icon_dark_mob from '../image/dark/header_icon_dark_mob.svg'
+import burger_menu from '../image/burger_menu.svg'
+import burger_menu_close from '../image/burger_menu_close.svg'
+import restart from '../image/restart.svg'
+import light_mode from '../image/light_mode.svg'
+import dark_mode from '../image/dark_mode.svg'
+import avatar from '../image/avatar.png'
+import alba from '../image/alba.svg'
+import arrow_down from '../image/arrow_down.svg'
+import gold_coin from '../image/gold_coin.svg'
+import Box from '@mui/material/Box';
+
+
+import {
+    AppBar,
+    Avatar,
+    Container,
+    Divider,
+    Drawer,
+    Grid,
+    IconButton,
+    Link,
+    List,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    MenuItem,
+    MenuList,
+    Popover,
+    Typography, useMediaQuery,
+    useTheme
+} from "@mui/material";
+
+import {useMainPageStyles} from "./mainPageStyles";
+
+
+export interface IMainPage {
+    themeCurrent: "dark" | "light";
+}
+
+const MainPage = ({themeCurrent}: IMainPage) => {
+
+    const theme = useTheme();
+    const classes = useMainPageStyles();
+
+    // const classes = useAppCss();
+
+    const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+
+    const openMobileHeaderDrawer = () => {
+        setOpenDrawer(true);
+    };
+    const closeMobileHeaderDrawer = () => {
+        setOpenDrawer(false);
+    };
+
+    const mainMenuArray = [
+        {title: "Тренажер", href: "#"},
+        {title: "Тест", href: "#"},
+        {title: "Навчання", href: "#"}
+    ];
+    const mainMenuArrayForDesktop = [
+        {title: "Тест", href: "#"}, {title: "Тренажер", href: "#"}, {title: "Навчання", href: "#"},
+    ];
+
+    const smallMenuArray = [
+        {title: "Для вчителів", href: "#"},
+        {title: "Про нас", href: "#"},
+        {title: "Рейтинг", href: "#"},
+        {title: "Допомога", href: "#"},
+        {title: "Контакти", href: "#"},
+        {title: "Підтримати проєкт", href: "#"},
+    ]
+    const smUp = useMediaQuery(theme.breakpoints.up('sm'));
+    const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+
+    const avatarBlock = <Link href={"#"}><Avatar alt={"avatar"} src={avatar}/></Link>;
+
+    const restartBtn = <IconButton
+        size={"small"}
+    >
+        <img src={restart} alt="restart"/>
+    </IconButton>;
+
+    const darkModeBtn = <IconButton
+        size={"small"}
+    >
+        <img src={dark_mode} alt="dark_mode"/>
+    </IconButton>;
+
+    const lightModeBtn = <IconButton
+        size={"small"}
+    >
+        <img src={light_mode} alt="light_mode"/>
+    </IconButton>;
+
+
+    const buttonContainer = <Grid
+        className={!mdUp ? classes.mobileButtonContainer : undefined}
+        spacing={6}
+        container alignItems={"center"}
+        justifyContent={"center"}>
+        <Grid item xs={"auto"}>
+            {restartBtn}
+        </Grid>
+        <Grid item xs={"auto"}>
+            {themeCurrent === "dark"
+                ?
+                lightModeBtn
+                :
+                darkModeBtn
+            }
+        </Grid>
+    </Grid>;
+
+    const toggleMenuBlock = React.useRef(null);
+
+    const [anchorElPopover, setAnchorElPopover] = React.useState(toggleMenuBlock.current);
+
+    const handleClick = () => {
+        setAnchorElPopover(toggleMenuBlock.current);
+    };
+
+    const handleClose = () => {
+        setAnchorElPopover(null);
+    };
+
+    const openPopover = Boolean(anchorElPopover);
+    const id = openPopover ? 'simple-popover' : undefined;
+
+
+    return (
+        <React.Fragment>
+            <AppBar component={"header"} position={"static"}>
+                <Container>
+                    <Grid container alignItems={"center"} justifyContent={"space-between"}>
+                        <Grid item={true} xs={"auto"}>
+                            <Grid spacing={6} container alignItems={"center"}>
+                                <Grid item xs={"auto"}>
+                                    <a href="#">
+                                        {themeCurrent !== "dark"
+                                            ? (!smUp
+                                                ?
+                                                <img src={header_icon_light_mob} alt="header_icon_light_mob"/>
+                                                :
+                                                <img src={header_icon_light} alt="header_icon_light"/>)
+                                            :
+                                            (!smUp
+                                                ?
+                                                <img src={header_icon_dark_mob} alt="header_icon_light_mob"/>
+                                                :
+                                                <img src={header_icon_dark} alt="header_icon_light"/>)
+                                        }
+
+                                    </a>
+                                </Grid>
+                                {mdUp && <Grid item xs={"auto"}>
+                                    <List dense disablePadding className={classes.headerMainMenu}>
+                                        {mainMenuArrayForDesktop.map(({href, title}, index) => (
+                                            <ListItemButton
+                                                dense
+                                                href={href}
+                                                key={title + index}
+                                                selected={title === "Тренажер"}
+                                                classes={{
+                                                    root: classes.headerMainMenuItemText,
+                                                    selected: classes.headerMainMenuItemTextSelected
+                                                }}
+                                            >
+                                                <Typography
+                                                >
+                                                    {title}
+                                                </Typography>
+                                            </ListItemButton>
+                                        ))}
+                                        <ListItemButton
+                                            className={openPopover ? classes.listItemHasOpenPopover : undefined}
+                                            ref={toggleMenuBlock}
+                                            aria-describedby={id}
+                                            onClick={handleClick}
+                                            dense
+                                            classes={{
+                                                root: classes.headerMainMenuItemText,
+                                                selected: classes.headerMainMenuItemTextSelected
+                                            }}
+                                        >
+                                            <Typography>Більше</Typography>
+                                            <ListItemIcon>
+                                                <img src={arrow_down} alt="arrow_down"/>
+                                            </ListItemIcon>
+                                        </ListItemButton>
+                                    </List>
+                                    <Popover
+                                        PaperProps={{
+                                            variant: "outlined",
+                                            elevation: 0,
+                                            square: false,
+                                        }}
+                                        id={id}
+                                        open={openPopover}
+                                        anchorEl={anchorElPopover}
+                                        onClose={handleClose}
+                                        anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'left',
+                                        }}
+                                    >
+                                        <MenuList disablePadding>
+                                            {smallMenuArray.map(({title, href}, key) =>
+                                                <MenuItem href={href} onClick={handleClose}
+                                                          key={title}>{title}</MenuItem>
+                                            )}
+                                        </MenuList>
+                                    </Popover>
+                                </Grid>
+                                }
+                            </Grid>
+                        </Grid>
+
+                        {mdUp
+                            ?
+                            <Grid item xs={"auto"} sx={{display: {xs: 'none', md: 'flex'}}}>
+                                <Grid spacing={8} container alignItems={"center"}>
+                                    <Grid item xs={"auto"}>
+                                        {buttonContainer}
+                                    </Grid>
+                                    <Grid item xs={"auto"}>
+                                        {avatarBlock}
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            :
+                            <Grid item xs={"auto"}>
+                                {<IconButton onClick={openMobileHeaderDrawer} size={"small"}>
+                                    <img src={burger_menu} alt="burger_menu"/>
+                                </IconButton>}
+                            </Grid>
+                        }
+
+
+                    </Grid>
+                </Container>
+            </AppBar>
+            <Box className={classes.main} component={'main'}>
+                <Container>
+                    <Grid spacing={5} container alignItems={"center"} flexWrap={"nowrap"}>
+                        <Grid item xs={'auto'}>
+                            <img className={classes.albaIcon} src={alba} alt="alba"/>
+                        </Grid>
+                        <Grid className={classes.typedTextContainer} item>
+                            <Typography
+                                variant={'inherit'}
+                                className={classes.typedTextElem}
+                            >ddfdd ddfdd ddfdd ddfdd</Typography>
+                        </Grid>
+                    </Grid>
+                    {!smUp && buttonContainer}
+                </Container>
+            </Box>
+
+            {!mdUp &&
+            <Drawer
+                PaperProps={{
+                    className: classes.drawerPaper,
+                }}
+                onClose={closeMobileHeaderDrawer}
+                anchor={'left'}
+                open={openDrawer}>
+                <AppBar component={"div"} position={"static"}>
+                    <Container className={classes.driverAppBarContainer}>
+                        <Grid container alignItems={"center"} justifyContent={"space-between"}>
+                            <Grid item xs={"auto"}>
+                                <Link href="#">
+                                    {!smUp
+                                        ?
+                                        <img src={header_icon_dark_mob} alt="header_icon_dark_mob"/>
+                                        :
+                                        <img src={header_icon_dark} alt="header_icon_light"/>
+                                    }
+                                </Link>
+                            </Grid>
+                            <Grid item xs={"auto"}>
+                                <IconButton onClick={closeMobileHeaderDrawer} size={"small"}>
+                                    <img src={burger_menu_close} alt="burger_menu_close"/>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                    </Container>
+
+                </AppBar>
+                <Container>
+                    <nav>
+                        <List disablePadding>
+                            {mainMenuArray.map(({href, title}, key) => (
+                                <React.Fragment key={title + key}>
+                                    <ListItemButton
+                                        disableGutters
+                                        href={href}
+                                        className={classes.mobileListItem}
+                                    >
+                                        <ListItemText
+                                            className={classes.mobileMainMenuItemText}
+                                            classes={{primary:classes.mobileMainMenuItemText}}
+                                            primary={title}/>
+                                    </ListItemButton>
+                                    <Divider light component={"li"}/>
+                                </React.Fragment>
+                            ))
+                            }
+                        </List>
+
+                        <List disablePadding>
+                            {smallMenuArray.map(({href, title}, key) => (
+                                <ListItemButton
+                                    key={title}
+                                    href={href}
+                                    disableGutters
+                                    className={classes.mobileListItem}
+                                >
+                                    <ListItemText
+                                        sx={{margin: 0}}
+                                        primaryTypographyProps={{
+                                            color: "#FFF",
+                                            fontSize: theme.spacing(3),
+                                            fontWeight: 500,
+                                            lineHeight: 1.5,
+                                        }}
+                                        primary={title}/>
+                                </ListItemButton>
+                            ))}
+                        </List>
+                    </nav>
+
+                    <Grid mt={0} pb={2} spacing={3} container alignItems={"center"}>
+                        <Grid item xs={"auto"}>
+                            {avatarBlock}
+                        </Grid>
+                        <Grid item xs={"auto"}>
+                            <Typography>
+                                Alex
+                            </Typography>
+                            <Grid spacing={1} container>
+                                <Grid item xs={"auto"}>
+                                    <img src={gold_coin} alt="gold_coin"/>
+                                </Grid>
+                                <Grid item xs={"auto"}>
+                                    <Typography>
+                                        35 543
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+
+                </Container>
+
+
+            </Drawer>
+            }        </React.Fragment>
+    );
+}
+
+export default MainPage;

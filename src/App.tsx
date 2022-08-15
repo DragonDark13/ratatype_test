@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {ThemeProvider} from "@mui/material/styles";
+import themeDark from "./styles/themeDark";
+import themeLight from "./styles/theme";
+import GlobalCssDark from "./styles/globalCssDark";
+import GlobalCssLight from "./styles/globalCssLight";
+import MainPage from "./components/MainPage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const App = () => {
+
+    const [themeCurrent, setThemeCurrent] = useState<"dark" | "light">("light");
+
+    return (
+        <ThemeProvider theme={themeCurrent === "dark" ? themeDark : themeLight}>
+            <GlobalCssDark/>
+            {themeCurrent === "dark" ? <GlobalCssDark/> : <GlobalCssLight/>}
+            <MainPage themeCurrent={themeCurrent}/>
+        </ThemeProvider>
+    );
 }
 
 export default App;
