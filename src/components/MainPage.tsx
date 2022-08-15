@@ -3,14 +3,12 @@ import header_icon_light from '../image/light/header_icon_light.svg'
 import header_icon_dark from '../image/dark/header_icon_dark.svg'
 import header_icon_light_mob from '../image/light/header_icon_light_mob.svg'
 import header_icon_dark_mob from '../image/dark/header_icon_dark_mob.svg'
-import burger_menu from '../image/burger_menu.svg'
 import burger_menu_close from '../image/burger_menu_close.svg'
 import restart from '../image/restart.svg'
 import light_mode from '../image/light_mode.svg'
 import dark_mode from '../image/dark_mode.svg'
 import avatar from '../image/avatar.png'
 import alba from '../image/alba.svg'
-import arrow_down from '../image/arrow_down.svg'
 import gold_coin from '../image/gold_coin.svg'
 import Box from '@mui/material/Box';
 
@@ -49,8 +47,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     const theme = useTheme();
     const classes = useMainPageStyles();
 
-    // const classes = useAppCss();
-
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
     const openMobileHeaderDrawer = () => {
@@ -77,6 +73,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         {title: "Контакти", href: "#"},
         {title: "Підтримати проєкт", href: "#"},
     ]
+
     const smUp = useMediaQuery(theme.breakpoints.up('sm'));
     const mdUp = useMediaQuery(theme.breakpoints.up('md'));
 

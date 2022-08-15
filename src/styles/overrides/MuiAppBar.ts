@@ -5,7 +5,7 @@ const breakpoints = createBreakpoints({});
 
 export default {
     styleOverrides: {
-        // Name of the slot
+
         root: {
             paddingTop: themeSpacing[1] + themeSpacing[5] + "px",
             paddingBottom: themeSpacing[1] + themeSpacing[5] + "px",

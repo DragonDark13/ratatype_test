@@ -1,18 +1,9 @@
 import {createTheme} from '@mui/material';
-import {Theme, useTheme, ThemeOptions, TypographyVariantsOptions} from '@mui/material';
+import { ThemeOptions} from '@mui/material';
 import components from './overrides/index';
 import { themeSpacing } from './constants';
 import paletteDark from './paletteDark';
-
-const breakpoints = {
-    values: {
-        xs: 0,
-        sm: 768,
-        md: 992,
-        lg: 1366,
-        xl: 1536,
-    }
-};
+import breakpoints from './breakpoints';
 
 
 export const themeConfigurationDark: ThemeOptions | any = {

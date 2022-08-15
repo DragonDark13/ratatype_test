@@ -3,7 +3,6 @@ import {createStyles} from "@mui/styles";
 import {Theme} from "@mui/material";
 import {customGridWidth} from "../utils/mixinsForStyle";
 import {alpha} from "@mui/material/styles";
-import palette from "../styles/palette";
 import themeDark from "../styles/themeDark";
 
 
