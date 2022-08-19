@@ -3,11 +3,7 @@ import themeDark from "./themeDark";
 
 const GlobalCssDark = withStyles({
   '@global': {
-    html: {
-      //overflow: 'hidden'
-    },
     body: {
-      //overflow: 'auto'
       background:themeDark.palette.background.default,
     },
     'html, body': {

@@ -4,10 +4,8 @@ import themeLight from "./theme";
 const GlobalCssLight = withStyles({
   '@global': {
     html: {
-      //overflow: 'hidden'
     },
     body: {
-      //overflow: 'auto'
       background:themeLight.palette.background.default,
     },
     'html, body': {
