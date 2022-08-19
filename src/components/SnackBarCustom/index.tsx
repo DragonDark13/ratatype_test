@@ -37,7 +37,7 @@ const SnackBarCustom = ({correctChar, errorChar}: ISnackBar) => {
 
     React.useEffect(() => {
         if (errorChar) {
-            setSnackBarChildren(<SnackBarApiError handleSnackbarClose={handleSnackbarClose} message={"Помиляйтесь," +
+            setSnackBarChildren(<SnackBarError handleSnackbarClose={handleSnackbarClose} message={"Помиляйтесь," +
             " але їдіть вперед!"}/>);
             setSnackBarState({...snackBarState, open: true, autoHideDuration: 5000});
         }
@@ -86,13 +86,13 @@ const SnackBarSuccessMessage = React.forwardRef(function SnackbarFunction(
     );
 });
 
-const SnackBarApiError = React.forwardRef(function SnackbarFunction(
+const SnackBarError = React.forwardRef(function SnackbarFunction(
     {handleSnackbarClose, message}: TSnackbarMessageProps,
     ref: any
 ) {
     return (
         <Alert ref={ref} elevation={6} variant='filled' severity='error' onClose={handleSnackbarClose}>
-
+            {message}
         </Alert>
     );
 });

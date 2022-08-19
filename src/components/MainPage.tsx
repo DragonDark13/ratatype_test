@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import header_icon_light from '../image/light/header_icon_light.svg'
 import header_icon_dark from '../image/dark/header_icon_dark.svg'
 import header_icon_light_mob from '../image/light/header_icon_light_mob.svg'
@@ -14,7 +14,6 @@ import Box from '@mui/material/Box';
 
 
 import {
-    Alert,
     AppBar,
     Avatar,
     Container,
@@ -101,7 +100,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     } = useTypingGame(text, {skipCurrentWordOnSpace: false, pauseOnError: true});
 
     console.log(
-       JSON.stringify(
+        JSON.stringify(
             {
                 startTime,
                 endTime,
@@ -118,7 +117,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     );
 
 
-
     const handleKey = (key: any) => {
         if (key === "Escape") {
             resetTyping();
@@ -131,7 +129,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     useEffect(() => {
 
-         const onKeyDown = ({key}:any) => {
+        const onKeyDown = ({key}: any) => {
             handleKey(key)
         }
 
@@ -174,13 +172,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
             }
 
         </IconButton>;
-
-    // const lightModeBtn = <IconButton
-    //     size={"small"}
-    // >
-    //     <img src={light_mode} alt="light_mode"/>
-    // </IconButton>;
-
 
     const buttonContainer = <Grid
         className={!mdUp ? classes.mobileButtonContainer : undefined}
@@ -342,11 +333,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                                 <Typography
                                     variant={'inherit'}
                                     className={classes.typedTextElem}
-                                    // onKeyDown={(e) => {
-                                    //     handleKey(e.key);
-                                    //     e.preventDefault();
-                                    // }}
-                                    // tabIndex={0}
                                 >
                                     {text.split("").map((char: string, index: number) => {
                                         let state = charsState[index];
@@ -467,7 +453,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                 </Container>
             </Drawer>
             }
-            <SnackBarCustom correctChar={correctChar} errorChar={errorChar} />
+            <SnackBarCustom correctChar={correctChar} errorChar={errorChar}/>
         </React.Fragment>
     );
 }
