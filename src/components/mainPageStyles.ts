@@ -116,7 +116,7 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
         },
         listItemHasOpenPopoverDark: {
             "&.MuiButtonBase-root": {
-                background: alpha(themeDark.palette.primary.contrastText,0.1),
+                background: alpha(themeDark.palette.primary.contrastText, 0.1),
             }
         },
 
@@ -176,6 +176,10 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
             "&.MuiListItemIcon-root": {
                 color: theme.palette.primary.main,
             }
-        }
+        },
+
+        currLetter: {
+            textDecoration: "underline",
+        },
 
     }));

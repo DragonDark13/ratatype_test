@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import header_icon_light from '../image/light/header_icon_light.svg'
 import header_icon_dark from '../image/dark/header_icon_dark.svg'
 import header_icon_light_mob from '../image/light/header_icon_light_mob.svg'
@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 
 
 import {
+    Alert,
     AppBar,
     Avatar,
     Container,
@@ -28,13 +29,15 @@ import {
     ListItemText,
     MenuItem,
     MenuList,
-    Popover,
+    Popover, SnackbarOrigin,
     Typography, useMediaQuery,
     useTheme
 } from "@mui/material";
 
 import {useMainPageStyles} from "./mainPageStyles";
 import {ArrowDown, HamburgerIcon} from "../icons";
+import useTypingGame from "react-typing-game-hook";
+import SnackBarCustom from "./SnackBarCustom";
 
 
 export interface IMainPage {
@@ -79,8 +82,72 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     const avatarBlock = <Link href={"#"}><Avatar alt={"avatar"} src={avatar}/></Link>;
 
+    let text = "The quick brown fox jumps over the lazy dog";
+
+
+    const {
+        states: {
+            charsState,
+            length,
+            currIndex,
+            currChar,
+            correctChar,
+            errorChar,
+            phase,
+            startTime,
+            endTime
+        },
+        actions: {insertTyping, resetTyping, deleteTyping}
+    } = useTypingGame(text, {skipCurrentWordOnSpace: false, pauseOnError: true});
+
+    console.log(
+       JSON.stringify(
+            {
+                startTime,
+                endTime,
+                length,
+                currIndex,
+                currChar,
+                correctChar,
+                errorChar,
+                phase
+            },
+            null,
+            2
+        )
+    );
+
+
+
+    const handleKey = (key: any) => {
+        if (key === "Escape") {
+            resetTyping();
+        } else if (key === "Backspace") {
+            deleteTyping(false);
+        } else if (key.length === 1) {
+            insertTyping(key);
+        }
+    };
+
+    useEffect(() => {
+
+         const onKeyDown = ({key}:any) => {
+            handleKey(key)
+        }
+
+        window.addEventListener('keydown', onKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", onKeyDown);
+        };
+
+
+    }, []);
+
+
     const restartBtn = <IconButton
         size={"small"}
+        onClick={resetTyping}
     >
         <img src={restart} alt="restart"/>
     </IconButton>;
@@ -169,7 +236,8 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
                                     </a>
                                 </Grid>
-                                {mdUp && <Grid item xs={"auto"}>
+                                {mdUp &&
+                                <Grid item xs={"auto"}>
                                     <List dense disablePadding className={classes.headerMainMenu}>
                                         {mainMenuArrayForDesktop.map(({href, title}, index) => (
                                             <ListItemButton
@@ -227,7 +295,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                                             {smallMenuArray.map(({title, href}, key) =>
                                                 <MenuItem className={classes.popoverListItem} href={href}
                                                           onClick={handleClose}
-                                                          key={title}>{title}</MenuItem>
+                                                          key={title + key}>{title}</MenuItem>
                                             )}
                                         </MenuList>
                                     </Popover>
@@ -256,8 +324,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                                 </IconButton>}
                             </Grid>
                         }
-
-
                     </Grid>
                 </Container>
             </AppBar>
@@ -271,7 +337,38 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                             <Typography
                                 variant={'inherit'}
                                 className={classes.typedTextElem}
-                            >ddfdd ddfdd ddfdd ddfdd</Typography>
+
+                            >
+                                <Typography
+                                    variant={'inherit'}
+                                    className={classes.typedTextElem}
+                                    // onKeyDown={(e) => {
+                                    //     handleKey(e.key);
+                                    //     e.preventDefault();
+                                    // }}
+                                    // tabIndex={0}
+                                >
+                                    {text.split("").map((char: string, index: number) => {
+                                        let state = charsState[index];
+                                        let color = state === 0 ? theme.palette.primary.main : state === 1 ? "green" : "red";
+                                        if (index > (currIndex - 1)) {
+                                            return (
+                                                <span
+                                                    key={char + index}
+                                                    style={{color}}
+                                                    className={currIndex + 1 === index ? classes.currLetter : undefined}
+                                                >
+                                                  {char}
+                                                </span>
+                                            );
+
+                                        } else return null
+                                    })}
+                                </Typography>
+
+                            </Typography>
+
+
                         </Grid>
                     </Grid>
                     {!smUp && buttonContainer}
@@ -360,7 +457,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                                 </Grid>
                                 <Grid item xs={"auto"}>
                                     <Typography>
-                                        35 543
+                                        {correctChar}
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -370,6 +467,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                 </Container>
             </Drawer>
             }
+            <SnackBarCustom correctChar={correctChar} errorChar={errorChar} />
         </React.Fragment>
     );
 }

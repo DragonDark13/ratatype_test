@@ -1,19 +1,12 @@
 import {createTheme} from '@mui/material';
 import { ThemeOptions} from '@mui/material';
-import components from './overrides/index';
-import { themeSpacing } from './constants';
 import paletteDark from './paletteDark';
-import breakpoints from './breakpoints';
+import { themeConfigurationLight } from './theme';
 
 
 export const themeConfigurationDark: ThemeOptions | any = {
-    breakpoints: breakpoints,
+    ...themeConfigurationLight,
     palette: paletteDark,
-    components: components,
-    spacing: themeSpacing,
-    typography: {
-    fontFamily: '"Montserrat", Helvetica, Arial, sans-serif;',
-    },
 }
 
 const themeDark = createTheme(themeConfigurationDark);

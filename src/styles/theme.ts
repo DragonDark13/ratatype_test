@@ -4,6 +4,7 @@ import components from './overrides/index';
 import { themeSpacing } from './constants';
 import palette from './palette';
 import breakpoints from './breakpoints';
+import typography from './typography';
 
 
 export const themeConfigurationLight: ThemeOptions | any = {
@@ -11,9 +12,7 @@ export const themeConfigurationLight: ThemeOptions | any = {
     palette: palette,
     components: components,
     spacing: themeSpacing,
-    typography: {
-    fontFamily: '"Montserrat", Helvetica, Arial, sans-serif;',
-    },
+    typography: typography,
 }
 
 const themeLight = createTheme(themeConfigurationLight);
