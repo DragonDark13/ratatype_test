@@ -47,7 +47,9 @@ export interface IMainPage {
 const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     const theme = useTheme();
-    const classes = useMainPageStyles();
+    // const classes = useMainPageStyles();
+    const { classes } = useMainPageStyles();
+
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 

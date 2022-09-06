@@ -1,11 +1,9 @@
-import { withStyles } from '@mui/styles';
 import themeLight from "./theme";
 
-const GlobalCssLight = withStyles({
-  '@global': {
-    html: {
+const GlobalCssLight ={
+    "html": {
     },
-    body: {
+    "body": {
       background:themeLight.palette.background.default,
     },
     'html, body': {
@@ -14,7 +12,7 @@ const GlobalCssLight = withStyles({
       color: themeLight.palette.primary.contrastText,
       '-webkit-font-smoothing': 'antialiased'
     },
-  }
-})(() => null);
+
+};
 
 export default GlobalCssLight;

@@ -1,9 +1,11 @@
-import {makeStyles} from "../utils/makeStyles";
-import {createStyles} from "@mui/styles";
+// import {makeStyles} from "../utils/makeStyles";
 import {Theme} from "@mui/material";
 import {customGridWidth} from "../utils/mixinsForStyle";
 import {alpha} from "@mui/material/styles";
 import themeDark from "../styles/themeDark";
+import { makeStyles, withStyles } from 'tss-react/mui';
+
+import { createMakeAndWithStyles } from "tss-react";
 
 
 const albaImgSmSize = 96;
@@ -11,14 +13,13 @@ const albaContainerSmSize = albaImgSmSize + 24;
 const albaImgMdSize = 176;
 const albaContainerMdSize = albaImgMdSize + 24;
 
-export const useMainPageStyles = makeStyles((theme: Theme) =>
-    createStyles({
+export const useMainPageStyles = makeStyles()((theme:Theme) => ({
 
-        drawerPaper: {
+        "drawerPaper": {
             paddingBottom: theme.spacing(7),
             width: "100vw",
         },
-        typedTextContainer: {
+        "typedTextContainer": {
             ...customGridWidth(112),
             [theme.breakpoints.up('sm')]: {
                 ...customGridWidth(albaContainerSmSize),
@@ -28,7 +29,7 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
             },
         },
 
-        typedTextElem: {
+        "typedTextElem": {
             width: `calc(100% + ${theme.spacing(3)})`,
             overflow: "hidden",
             whiteSpace: "nowrap",
@@ -49,11 +50,11 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
                 lineHeight: 1.13,
             },
         },
-        mobileButtonContainer: {
+        "mobileButtonContainer": {
             paddingBottom: theme.spacing(3),
             paddingTop: "146px",
         },
-        albaIcon: {
+        "albaIcon": {
             display: "block",
             [theme.breakpoints.up('sm')]: {
                 width: albaImgSmSize,
@@ -62,7 +63,7 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
                 width: albaImgMdSize,
             },
         },
-        driverAppBarContainer: {
+        "driverAppBarContainer": {
             [theme.breakpoints.up('sm')]: {
 
                 "&.MuiContainer-root": {
@@ -72,11 +73,11 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
 
             },
         },
-        headerMainMenu: {
+        "headerMainMenu": {
             display: "flex",
             flexGrow: 1,
         },
-        headerMainMenuItemText: {
+        "headerMainMenuItemText": {
 
             "&.MuiButtonBase-root": {
                 padding: theme.spacing(1, 2),
@@ -99,7 +100,7 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
             }
 
         },
-        headerMainMenuItemTextSelected: {
+        "headerMainMenuItemTextSelected": {
 
             "&.Mui-selected.MuiButtonBase-root": {
                 background: "transparent",
@@ -109,28 +110,28 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
             }
         },
 
-        listItemHasOpenPopover: {
+        "listItemHasOpenPopover": {
             "&.MuiButtonBase-root": {
                 background: "#F3F5F7",
             }
         },
-        listItemHasOpenPopoverDark: {
+        "listItemHasOpenPopoverDark": {
             "&.MuiButtonBase-root": {
                 background: alpha(themeDark.palette.primary.contrastText, 0.1),
             }
         },
 
-        popoverListItem: {
+        "popoverListItem": {
             "&.MuiMenuItem-root": {
                 color: alpha(theme.palette.primary.main, 0.64),
             }
         },
 
-        main: {
+        "main": {
             paddingTop: theme.spacing(3),
         },
 
-        mobileListItem: {
+        "mobileListItem": {
 
             "&.MuiListItemButton-root": {
                 paddingTop: theme.spacing(3),
@@ -139,7 +140,7 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
         },
 
 
-        mobileMainMenuItemText: {
+        "mobileMainMenuItemText": {
 
             "&, &.MuiListItemText-root": {
                 margin: 0,
@@ -153,7 +154,7 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
             }
         },
 
-        mobileSmallMenuItemText: {
+        "mobileSmallMenuItemText": {
 
             "&, &.MuiListItemText-root": {
                 margin: 0,
@@ -168,7 +169,7 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
 
         },
 
-        hamburgerButton: {
+        "hamburgerButton": {
             "&.MuiIconButton-root": {
                 color: theme.palette.primary.light,
             },
@@ -178,8 +179,8 @@ export const useMainPageStyles = makeStyles((theme: Theme) =>
             }
         },
 
-        currLetter: {
+        "currLetter": {
             textDecoration: "underline",
         },
 
-    }));
+   }));

@@ -1,9 +1,7 @@
-import { withStyles } from '@mui/styles';
 import themeDark from "./themeDark";
 
-const GlobalCssDark = withStyles({
-  '@global': {
-    body: {
+const GlobalCssDark ={
+    "body": {
       background:themeDark.palette.background.default,
     },
     'html, body': {
@@ -12,7 +10,6 @@ const GlobalCssDark = withStyles({
       color: themeDark.palette.primary.contrastText,
       '-webkit-font-smoothing': 'antialiased'
     },
-  }
-})(() => null);
+};
 
 export default GlobalCssDark;

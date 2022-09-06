@@ -5,6 +5,10 @@ import themeLight from "./styles/theme";
 import GlobalCssDark from "./styles/globalCssDark";
 import GlobalCssLight from "./styles/globalCssLight";
 import MainPage from "./components/MainPage";
+// import GlobalStyles from '@mui/material/GlobalStyles';
+import { GlobalStyles } from "tss-react";
+
+
 
 
 const App = () => {
@@ -13,8 +17,8 @@ const App = () => {
 
     return (
         <ThemeProvider theme={themeCurrent === "dark" ? themeDark : themeLight}>
-            <GlobalCssDark/>
-            {themeCurrent === "dark" ? <GlobalCssDark/> : <GlobalCssLight/>}
+            <GlobalStyles styles={GlobalCssDark}/>
+            {themeCurrent === "dark" ? <GlobalStyles styles={GlobalCssDark}/> : <GlobalStyles styles={GlobalCssLight}/>}
             <MainPage setThemeCurrent={setThemeCurrent} themeCurrent={themeCurrent}/>
         </ThemeProvider>
     );
