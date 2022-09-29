@@ -145,8 +145,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     }
 
 
-
-
     return (
         <React.Fragment>
             <Header themeCurrent={themeCurrent}

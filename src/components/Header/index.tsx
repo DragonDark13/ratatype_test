@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component, ComponentProps, ForwardedRef, ReactNode} from 'react';
 import {
     AppBar,
     Container,
@@ -16,8 +16,9 @@ import header_icon_dark_mob from "../../image/dark/header_icon_dark_mob.svg";
 import header_icon_dark from "../../image/dark/header_icon_dark.svg";
 import {ArrowDown, HamburgerIcon} from "../../icons";
 import {useMainPageStyles} from "../mainPageStyles";
+import HeaderNav from "../HeaderNav";
 
-interface ImainMenuArrayForDesktop {
+export interface IMainMenuArrayForDesktop {
     href: string;
     title: string
 }
@@ -26,10 +27,10 @@ interface ImainMenuArrayForDesktop {
 export interface IHeader {
     setThemeCurrent: (state: any) => void;
     themeCurrent: "dark" | "light";
-    mainMenuArrayForDesktop: Array<ImainMenuArrayForDesktop>;
-    smallMenuArray: Array<ImainMenuArrayForDesktop>
-    buttonContainer: any;
-    avatarBlock: any;
+    mainMenuArrayForDesktop: Array<IMainMenuArrayForDesktop>;
+    smallMenuArray: Array<IMainMenuArrayForDesktop>
+    buttonContainer: ReactNode;
+    avatarBlock: ReactNode;
     openMobileHeaderDrawer: () => void;
 }
 
@@ -90,44 +91,7 @@ const Header = ({
                             </Grid>
                             {mdUp &&
                             <Grid item xs={"auto"}>
-                                <List dense disablePadding className={classes.headerMainMenu}>
-                                    {mainMenuArrayForDesktop.map(({href, title}, index) => (
-                                        <ListItemButton
-                                            dense
-                                            href={href}
-                                            key={title + index}
-                                            selected={title === "Тренажер"}
-                                            classes={{
-                                                root: classes.headerMainMenuItemText,
-                                                selected: classes.headerMainMenuItemTextSelected
-                                            }}
-                                        >
-                                            <Typography
-                                            >
-                                                {title}
-                                            </Typography>
-                                        </ListItemButton>
-                                    ))}
-                                    <ListItemButton
-                                        className={openPopover ?
-                                            (themeCurrent === "dark" ? classes.listItemHasOpenPopoverDark : classes.listItemHasOpenPopover)
-                                            :
-                                            undefined}
-                                        ref={toggleMenuBlock}
-                                        aria-describedby={id}
-                                        onClick={handleClick}
-                                        dense
-                                        classes={{
-                                            root: classes.headerMainMenuItemText,
-                                            selected: classes.headerMainMenuItemTextSelected
-                                        }}
-                                    >
-                                        <Typography>Більше</Typography>
-                                        <ListItemIcon className={classes.hamburgerButton}>
-                                            <ArrowDown/>
-                                        </ListItemIcon>
-                                    </ListItemButton>
-                                </List>
+                                <HeaderNav  id={id} handleClick={handleClick} themeCurrent={themeCurrent} toggleMenuBlock={toggleMenuBlock} openPopover={openPopover} mainMenuArrayForDesktop={mainMenuArrayForDesktop}  />
                                 <Popover
                                     PaperProps={{
                                         variant: "outlined",
