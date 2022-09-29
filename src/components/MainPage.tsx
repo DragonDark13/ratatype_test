@@ -1,12 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import header_icon_light from '../image/light/header_icon_light.svg'
+import React, {useCallback, useEffect, useState} from 'react';
 import header_icon_dark from '../image/dark/header_icon_dark.svg'
-import header_icon_light_mob from '../image/light/header_icon_light_mob.svg'
 import header_icon_dark_mob from '../image/dark/header_icon_dark_mob.svg'
 import burger_menu_close from '../image/burger_menu_close.svg'
-import restart from '../image/restart.svg'
-import light_mode from '../image/light_mode.svg'
-import dark_mode from '../image/dark_mode.svg'
 import avatar from '../image/avatar.png'
 import alba from '../image/alba.svg'
 import gold_coin from '../image/gold_coin.svg'
@@ -24,19 +19,16 @@ import {
     Link,
     List,
     ListItemButton,
-    ListItemIcon,
     ListItemText,
-    MenuItem,
-    MenuList,
-    Popover, SnackbarOrigin,
     Typography, useMediaQuery,
     useTheme
 } from "@mui/material";
 
 import {useMainPageStyles} from "./mainPageStyles";
-import {ArrowDown, HamburgerIcon} from "../icons";
 import useTypingGame from "react-typing-game-hook";
 import SnackBarCustom from "./SnackBarCustom";
+import Header from './Header';
+import ButtonContainer from "./ButtonContainer";
 
 
 export interface IMainPage {
@@ -47,8 +39,7 @@ export interface IMainPage {
 const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     const theme = useTheme();
-    // const classes = useMainPageStyles();
-    const { classes } = useMainPageStyles();
+    const {classes} = useMainPageStyles();
 
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
@@ -118,8 +109,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         )
     );
 
-
-    const handleKey = (key: any) => {
+     const handleKey = useCallback((key:any) => {
         if (key === "Escape") {
             resetTyping();
         } else if (key === "Backspace") {
@@ -127,7 +117,9 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         } else if (key.length === 1) {
             insertTyping(key);
         }
-    };
+    }, [resetTyping,deleteTyping,insertTyping]);
+
+
 
     useEffect(() => {
 
@@ -142,15 +134,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         };
 
 
-    }, []);
-
-
-    const restartBtn = <IconButton
-        size={"small"}
-        onClick={resetTyping}
-    >
-        <img src={restart} alt="restart"/>
-    </IconButton>;
+    }, [handleKey]);
 
     const onSwitchTheme = () => {
         if (themeCurrent === "light") {
@@ -160,166 +144,24 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         }
     }
 
-    const SwitchThemeModeBtn =
-        <IconButton
-            onClick={onSwitchTheme}
-            size={"small"}
-        >
-            {
-                themeCurrent === "light"
-                    ?
-                    <img src={dark_mode} alt="dark_mode"/>
-                    :
-                    <img src={light_mode} alt="light_mode"/>
-            }
 
-        </IconButton>;
-
-    const buttonContainer = <Grid
-        className={!mdUp ? classes.mobileButtonContainer : undefined}
-        spacing={6}
-        container alignItems={"center"}
-        justifyContent={"center"}>
-        <Grid item xs={"auto"}>
-            {restartBtn}
-        </Grid>
-        <Grid item xs={"auto"}>
-            {SwitchThemeModeBtn}
-        </Grid>
-    </Grid>;
-
-    const toggleMenuBlock = React.useRef(null);
-
-    const [anchorElPopover, setAnchorElPopover] = React.useState(toggleMenuBlock.current);
-
-    const handleClick = () => {
-        setAnchorElPopover(toggleMenuBlock.current);
-    };
-
-    const handleClose = () => {
-        setAnchorElPopover(null);
-    };
-
-    const openPopover = Boolean(anchorElPopover);
-    const id = openPopover ? 'simple-popover' : undefined;
 
 
     return (
         <React.Fragment>
-            <AppBar component={"header"} position={"static"}>
-                <Container>
-                    <Grid container alignItems={"center"} justifyContent={"space-between"}>
-                        <Grid item={true} xs={"auto"}>
-                            <Grid spacing={6} container alignItems={"center"}>
-                                <Grid item xs={"auto"}>
-                                    <a href="#">
-                                        {themeCurrent !== "dark"
-                                            ? (!smUp
-                                                ?
-                                                <img src={header_icon_light_mob} alt="header_icon_light_mob"/>
-                                                :
-                                                <img src={header_icon_light} alt="header_icon_light"/>)
-                                            :
-                                            (!smUp
-                                                ?
-                                                <img src={header_icon_dark_mob} alt="header_icon_light_mob"/>
-                                                :
-                                                <img src={header_icon_dark} alt="header_icon_light"/>)
-                                        }
-
-                                    </a>
-                                </Grid>
-                                {mdUp &&
-                                <Grid item xs={"auto"}>
-                                    <List dense disablePadding className={classes.headerMainMenu}>
-                                        {mainMenuArrayForDesktop.map(({href, title}, index) => (
-                                            <ListItemButton
-                                                dense
-                                                href={href}
-                                                key={title + index}
-                                                selected={title === "Тренажер"}
-                                                classes={{
-                                                    root: classes.headerMainMenuItemText,
-                                                    selected: classes.headerMainMenuItemTextSelected
-                                                }}
-                                            >
-                                                <Typography
-                                                >
-                                                    {title}
-                                                </Typography>
-                                            </ListItemButton>
-                                        ))}
-                                        <ListItemButton
-                                            className={openPopover ?
-                                                (themeCurrent === "dark" ? classes.listItemHasOpenPopoverDark : classes.listItemHasOpenPopover)
-                                                :
-                                                undefined}
-                                            ref={toggleMenuBlock}
-                                            aria-describedby={id}
-                                            onClick={handleClick}
-                                            dense
-                                            classes={{
-                                                root: classes.headerMainMenuItemText,
-                                                selected: classes.headerMainMenuItemTextSelected
-                                            }}
-                                        >
-                                            <Typography>Більше</Typography>
-                                            <ListItemIcon className={classes.hamburgerButton}>
-                                                <ArrowDown/>
-                                            </ListItemIcon>
-                                        </ListItemButton>
-                                    </List>
-                                    <Popover
-                                        PaperProps={{
-                                            variant: "outlined",
-                                            elevation: 0,
-                                            square: false,
-                                        }}
-                                        id={id}
-                                        open={openPopover}
-                                        anchorEl={anchorElPopover}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'left',
-                                        }}
-                                    >
-                                        <MenuList disablePadding>
-                                            {smallMenuArray.map(({title, href}, key) =>
-                                                <MenuItem className={classes.popoverListItem} href={href}
-                                                          onClick={handleClose}
-                                                          key={title + key}>{title}</MenuItem>
-                                            )}
-                                        </MenuList>
-                                    </Popover>
-                                </Grid>
-                                }
-                            </Grid>
-                        </Grid>
-
-                        {mdUp
-                            ?
-                            <Grid item xs={"auto"} sx={{display: {xs: 'none', md: 'flex'}}}>
-                                <Grid spacing={8} container alignItems={"center"}>
-                                    <Grid item xs={"auto"}>
-                                        {buttonContainer}
-                                    </Grid>
-                                    <Grid item xs={"auto"}>
-                                        {avatarBlock}
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            :
-                            <Grid item xs={"auto"}>
-                                {<IconButton className={classes.hamburgerButton}
-                                             onClick={openMobileHeaderDrawer} size={"small"}>
-                                    <HamburgerIcon/>
-                                </IconButton>}
-                            </Grid>
-                        }
-                    </Grid>
-                </Container>
-            </AppBar>
+            <Header themeCurrent={themeCurrent}
+                    avatarBlock={avatarBlock}
+                    buttonContainer={
+                        <ButtonContainer
+                            onSwitchTheme={onSwitchTheme}
+                            resetTyping={resetTyping}
+                            themeCurrent={themeCurrent}/>
+                    }
+                    mainMenuArrayForDesktop={mainMenuArrayForDesktop}
+                    openMobileHeaderDrawer={openMobileHeaderDrawer}
+                    setThemeCurrent={setThemeCurrent}
+                    smallMenuArray={smallMenuArray}
+            />
             <Box className={classes.main} component={'main'}>
                 <Container>
                     <Grid spacing={5} container alignItems={"center"} flexWrap={"nowrap"}>
@@ -359,7 +201,10 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
                         </Grid>
                     </Grid>
-                    {!smUp && buttonContainer}
+                    {!smUp && <ButtonContainer
+                        onSwitchTheme={onSwitchTheme}
+                        resetTyping={resetTyping}
+                        themeCurrent={themeCurrent}/>}
                 </Container>
             </Box>
 
