@@ -1,20 +1,17 @@
-import React, {Component, ComponentProps, ForwardedRef, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {
     AppBar,
     Container,
     Grid, IconButton,
-    List,
-    ListItemButton,
-    ListItemIcon, MenuItem,
+    MenuItem,
     MenuList,
-    Popover,
-    Typography, useMediaQuery, useTheme
+    Popover, useMediaQuery, useTheme
 } from "@mui/material";
 import header_icon_light_mob from "../../image/light/header_icon_light_mob.svg";
 import header_icon_light from "../../image/light/header_icon_light.svg";
 import header_icon_dark_mob from "../../image/dark/header_icon_dark_mob.svg";
 import header_icon_dark from "../../image/dark/header_icon_dark.svg";
-import {ArrowDown, HamburgerIcon} from "../../icons";
+import {HamburgerIcon} from "../../icons";
 import {useMainPageStyles} from "../mainPageStyles";
 import HeaderNav from "../HeaderNav";
 
@@ -91,7 +88,9 @@ const Header = ({
                             </Grid>
                             {mdUp &&
                             <Grid item xs={"auto"}>
-                                <HeaderNav  id={id} handleClick={handleClick} themeCurrent={themeCurrent} toggleMenuBlock={toggleMenuBlock} openPopover={openPopover} mainMenuArrayForDesktop={mainMenuArrayForDesktop}  />
+                                <HeaderNav id={id} handleClick={handleClick} themeCurrent={themeCurrent}
+                                           toggleMenuBlock={toggleMenuBlock} openPopover={openPopover}
+                                           mainMenuArrayForDesktop={mainMenuArrayForDesktop}/>
                                 <Popover
                                     PaperProps={{
                                         variant: "outlined",

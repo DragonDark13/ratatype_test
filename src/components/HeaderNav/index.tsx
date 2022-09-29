@@ -1,9 +1,8 @@
 import React, {MutableRefObject} from 'react';
-import {Grid, List, ListItemButton, ListItemIcon, Typography} from "@mui/material";
+import {List, ListItemButton, ListItemIcon, Typography} from "@mui/material";
 import {ArrowDown} from "../../icons";
 import {useMainPageStyles} from "../mainPageStyles";
 import {IMainMenuArrayForDesktop} from "../Header";
-
 
 
 interface IHeaderNav {
@@ -12,10 +11,17 @@ interface IHeaderNav {
     themeCurrent: "dark" | "light";
     toggleMenuBlock: MutableRefObject<null>;
     handleClick: () => void;
-    id:string|undefined;
+    id: string | undefined;
 }
 
-const HeaderNav = ({mainMenuArrayForDesktop,handleClick,openPopover,themeCurrent,toggleMenuBlock,id}: IHeaderNav) => {
+const HeaderNav = ({
+                       mainMenuArrayForDesktop,
+                       handleClick,
+                       openPopover,
+                       themeCurrent,
+                       toggleMenuBlock,
+                       id
+                   }: IHeaderNav) => {
     const {classes} = useMainPageStyles();
 
     return (
