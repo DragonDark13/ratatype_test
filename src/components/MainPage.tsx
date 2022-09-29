@@ -109,7 +109,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         )
     );
 
-     const handleKey = useCallback((key:any) => {
+    const handleKey = useCallback((key: any) => {
         if (key === "Escape") {
             resetTyping();
         } else if (key === "Backspace") {
@@ -117,8 +117,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         } else if (key.length === 1) {
             insertTyping(key);
         }
-    }, [resetTyping,deleteTyping,insertTyping]);
-
+    }, [resetTyping, deleteTyping, insertTyping]);
 
 
     useEffect(() => {
@@ -172,31 +171,24 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                                 className={classes.typedTextElem}
 
                             >
-                                <Typography
-                                    variant={'inherit'}
-                                    className={classes.typedTextElem}
-                                >
-                                    {text.split("").map((char: string, index: number) => {
-                                        let state = charsState[index];
-                                        let color = state === 0 ? theme.palette.primary.main : state === 1 ? "green" : "red";
-                                        if (index > (currIndex - 1)) {
-                                            return (
-                                                <span
-                                                    key={char + index}
-                                                    style={{color}}
-                                                    className={currIndex + 1 === index ? classes.currLetter : undefined}
-                                                >
+
+                                {text.split("").map((char: string, index: number) => {
+                                    let state = charsState[index];
+                                    let color = state === 0 ? theme.palette.primary.main : state === 1 ? "green" : "red";
+                                    if (index > (currIndex - 1)) {
+                                        return (
+                                            <span
+                                                key={char + index}
+                                                style={{color}}
+                                                className={currIndex + 1 === index ? classes.currLetter : undefined}
+                                            >
                                                   {char}
                                                 </span>
-                                            );
+                                        );
 
-                                        } else return null
-                                    })}
-                                </Typography>
-
+                                    } else return null
+                                })}
                             </Typography>
-
-
                         </Grid>
                     </Grid>
                     {!smUp && <ButtonContainer
