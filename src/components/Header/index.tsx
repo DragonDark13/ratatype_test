@@ -69,7 +69,7 @@ const Header = ({
                     <Grid item={true} xs={"auto"}>
                         <Grid spacing={6} container alignItems={"center"}>
                             <Grid item xs={"auto"}>
-                                <a href="#">
+                                <a href="/#">
                                     {themeCurrent !== "dark"
                                         ? (!smUp
                                             ?
