@@ -30,6 +30,7 @@ import SnackBarCustom from "./SnackBarCustom";
 import Header from './Header';
 import ButtonContainer from "./ButtonContainer";
 import MobileDrawer from "./MobileDrawer";
+import FinishedDialog from "./FinishedDialog";
 
 
 export interface IMainPage {
@@ -45,6 +46,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
     const [endGame, setEndGame] = useState(false);
+    const [totalTimeTypeWritting, setTotalTimeTypeWritting] = useState<number | null>(null);
 
     const [openModal, setOpenModal] = React.useState(false);
 
@@ -169,6 +171,13 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         }
     }
 
+    useEffect(() => {
+
+        if (endTime !== null && startTime !== null){
+            setTotalTimeTypeWritting((endTime - startTime) / 1000)
+        }
+    }, [endTime, startTime]);
+
 
     return (
         <React.Fragment>
@@ -233,62 +242,11 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                           openDrawer={openDrawer}/>
             }
             <SnackBarCustom correctChar={correctChar} errorChar={errorChar}/>
-            <Dialog
-                open={openModal}
-                onClose={handleCloseModal}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    <Typography variant={"h4"}> Ви пройшли вправу!</Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        <Typography variant={"h5"}>Ваша статистика:</Typography>
-                        <List>
-                            <ListItem disableGutters disablePadding>
-                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
-                                              className={classes.statisticListItemText} secondaryTypographyProps={{
-                                    variant: "h6",
-                                    color: theme.palette.success.main
-                                }} primary={"Правильні символи:"} secondary={correctChar}/>
-                            </ListItem>
-                            <ListItem disableGutters disablePadding>
-                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
-                                              className={classes.statisticListItemText} secondaryTypographyProps={{
-                                    variant: "h6",
-                                    color: theme.palette.error.main
-                                }} primary={"Помилкові символи:"} secondary={errorChar}/>
-                            </ListItem>
-                            <ListItem disableGutters disablePadding>
-                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
-                                              className={classes.statisticListItemText} secondaryTypographyProps={{
-                                    variant: "h6",
-                                }} primary={"Усього символів:"} secondary={length}/>
-                            </ListItem>
-                            <ListItem disableGutters disablePadding>
-                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}} className={classes.statisticListItemText} secondaryTypographyProps={{
-                                    variant: "h6",
-                                }} primary={"Усього фраз:"} secondary={phase}/>
-                            </ListItem>
-                            <ListItem disableGutters disablePadding dense={false}>
-                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
-                                              className={classes.statisticListItemText} secondaryTypographyProps={{
-                                    variant: "h6",
-                                }} primary={"Загальний час"}
-                                              secondary={`${(endTime !== null && startTime !== null) && (endTime - startTime) / 1000} секунд`}/>
-                            </ListItem>
-                        </List>
-
-                        <Typography></Typography>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseModal} autoFocus>
-                        Почати знову
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            {totalTimeTypeWritting && <FinishedDialog textLength={length} correctChar={correctChar} errorChar={errorChar}
+                                                      handleCloseModal={handleCloseModal} openModal={openModal}
+                                                      phase={phase}
+                                                      totalTimeTypeWritting={totalTimeTypeWritting}/>
+            }
         </React.Fragment>
     );
 }
