@@ -51,24 +51,22 @@ const FinishedDialog = ({
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">
-                <Typography variant={"h4"}>Ви пройшли вправу!</Typography>
+            <DialogTitle variant={"h4"} id="alert-dialog-title">
+                Ви пройшли вправу!
             </DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    <Typography variant={"h5"}>Ваша статистика:</Typography>
-                    <List>
-                        {totalListArray.map(({title, value, color}) => (
-                            <ListItem key={title + value} disableGutters disablePadding>
-                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
-                                              className={classes.statisticListItemText} secondaryTypographyProps={{
-                                    variant: "h6",
-                                    color: color ? color : "inherit"
-                                }} primary={title} secondary={value}/>
-                            </ListItem>
-                        ))}
-                    </List>
-                </DialogContentText>
+                <Typography variant={"h5"}>Ваша статистика:</Typography>
+                <List>
+                    {totalListArray.map(({title, value, color}) => (
+                        <ListItem key={title + value} disableGutters disablePadding>
+                            <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
+                                          className={classes.statisticListItemText} secondaryTypographyProps={{
+                                variant: "h6",
+                                color: color ? color : "inherit"
+                            }} primary={title} secondary={value}/>
+                        </ListItem>
+                    ))}
+                </List>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleCloseModal} autoFocus>
