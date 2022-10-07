@@ -25,7 +25,7 @@ export interface IHeader {
     setThemeCurrent: (state: any) => void;
     themeCurrent: "dark" | "light";
     mainMenuArrayForDesktop: Array<IMainMenuArrayForDesktop>;
-    smallMenuArray: Array<IMainMenuArrayForDesktop>
+    smallMenuArray: Array<IMainMenuArrayForDesktop>;
     buttonContainer: ReactNode;
     avatarBlock: ReactNode;
     openMobileHeaderDrawer: () => void;

@@ -16,6 +16,10 @@ export default {
         default: COLORS.prussianBlue,
         paper: COLORS.prussianBlue,
     },
+    text:{
+        primary: COLORS.white,
+        secondary:alpha(COLORS.white, 0.64)
+    },
     action: {
         hover: alpha(COLORS.white, 0.1),
     }

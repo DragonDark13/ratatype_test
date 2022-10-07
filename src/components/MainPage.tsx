@@ -10,14 +10,14 @@ import Box from '@mui/material/Box';
 
 import {
     AppBar,
-    Avatar,
-    Container,
+    Avatar, Button,
+    Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     Divider,
     Drawer,
     Grid,
     IconButton,
     Link,
-    List,
+    List, ListItem,
     ListItemButton,
     ListItemText,
     Typography, useMediaQuery,
@@ -29,6 +29,7 @@ import useTypingGame from "react-typing-game-hook";
 import SnackBarCustom from "./SnackBarCustom";
 import Header from './Header';
 import ButtonContainer from "./ButtonContainer";
+import MobileDrawer from "./MobileDrawer";
 
 
 export interface IMainPage {
@@ -43,6 +44,14 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+    const [endGame, setEndGame] = useState(false);
+
+    const [openModal, setOpenModal] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpenModal(true);
+    };
+
 
     const openMobileHeaderDrawer = () => {
         setOpenDrawer(true);
@@ -75,6 +84,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     const avatarBlock = <Link href={"#"}><Avatar alt={"avatar"} src={avatar}/></Link>;
 
     let text = "The quick brown fox jumps over the lazy dog";
+    let shortText = "The";
 
 
     const {
@@ -89,8 +99,8 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
             startTime,
             endTime
         },
-        actions: {insertTyping, resetTyping, deleteTyping}
-    } = useTypingGame(text, {skipCurrentWordOnSpace: false, pauseOnError: true});
+        actions: {insertTyping, resetTyping, deleteTyping, endTyping}
+    } = useTypingGame(shortText, {skipCurrentWordOnSpace: false, pauseOnError: true});
 
     console.log(
         JSON.stringify(
@@ -135,6 +145,22 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     }, [handleKey]);
 
+    useEffect(() => {
+
+        if (currIndex === (length - 1)) {
+            setEndGame(true);
+            setOpenModal(true);
+            // alert("end");
+        }
+
+    }, [currIndex, length]);
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setEndGame(false);
+        resetTyping();
+    };
+
     const onSwitchTheme = () => {
         if (themeCurrent === "light") {
             setThemeCurrent("dark")
@@ -172,10 +198,10 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
                             >
 
-                                {text.split("").map((char: string, index: number) => {
+                                {shortText.split("").map((char: string, index: number) => {
                                     let state = charsState[index];
-                                    let color = state === 0 ? theme.palette.primary.main : state === 1 ? "green" : "red";
-                                    if (index > (currIndex - 1)) {
+                                    let color = state === 0 ? theme.palette.primary.main : state === 1 ? theme.palette.success.main : theme.palette.error.main;
+                                    if (index > (currIndex - 1) && !endGame) {
                                         return (
                                             <span
                                                 key={char + index}
@@ -199,98 +225,70 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
             </Box>
 
             {!mdUp &&
-            <Drawer
-                PaperProps={{
-                    className: classes.drawerPaper,
-                }}
-                onClose={closeMobileHeaderDrawer}
-                anchor={'left'}
-                open={openDrawer}>
-                <AppBar component={"div"} position={"static"}>
-                    <Container className={classes.driverAppBarContainer}>
-                        <Grid container alignItems={"center"} justifyContent={"space-between"}>
-                            <Grid item xs={"auto"}>
-                                <Link href="#">
-                                    {!smUp
-                                        ?
-                                        <img src={header_icon_dark_mob} alt="header_icon_dark_mob"/>
-                                        :
-                                        <img src={header_icon_dark} alt="header_icon_light"/>
-                                    }
-                                </Link>
-                            </Grid>
-                            <Grid item xs={"auto"}>
-                                <IconButton onClick={closeMobileHeaderDrawer} size={"small"}>
-                                    <img src={burger_menu_close} alt="burger_menu_close"/>
-                                </IconButton>
-                            </Grid>
-                        </Grid>
-                    </Container>
-
-                </AppBar>
-                <Container>
-                    <nav>
-                        <List disablePadding>
-                            {mainMenuArray.map(({href, title}, key) => (
-                                <React.Fragment key={title + key}>
-                                    <ListItemButton
-                                        disableGutters
-                                        href={href}
-                                        className={classes.mobileListItem}
-                                    >
-                                        <ListItemText
-                                            className={classes.mobileMainMenuItemText}
-                                            classes={{primary: classes.mobileMainMenuItemText}}
-                                            primary={title}/>
-                                    </ListItemButton>
-                                    <Divider light component={"li"}/>
-                                </React.Fragment>
-                            ))
-                            }
-                        </List>
-
-                        <List disablePadding>
-                            {smallMenuArray.map(({href, title}, key) => (
-                                <ListItemButton
-                                    key={title}
-                                    href={href}
-                                    disableGutters
-                                    className={classes.mobileListItem}
-                                >
-                                    <ListItemText
-                                        className={classes.mobileSmallMenuItemText}
-                                        classes={{primary: classes.mobileSmallMenuItemText}}
-                                        primary={title}/>
-                                </ListItemButton>
-                            ))}
-                        </List>
-                    </nav>
-
-                    <Grid mt={0} pb={2} spacing={3} container alignItems={"center"}>
-                        <Grid item xs={"auto"}>
-                            {avatarBlock}
-                        </Grid>
-                        <Grid item xs={"auto"}>
-                            <Typography>
-                                Alex
-                            </Typography>
-                            <Grid spacing={1} container>
-                                <Grid item xs={"auto"}>
-                                    <img src={gold_coin} alt="gold_coin"/>
-                                </Grid>
-                                <Grid item xs={"auto"}>
-                                    <Typography>
-                                        {correctChar}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-
-                        </Grid>
-                    </Grid>
-                </Container>
-            </Drawer>
+            <MobileDrawer smallMenuArray={smallMenuArray}
+                          avatarBlock={avatarBlock}
+                          correctChar={correctChar}
+                          closeMobileHeaderDrawer={closeMobileHeaderDrawer}
+                          mainMenuArray={mainMenuArray}
+                          openDrawer={openDrawer}/>
             }
             <SnackBarCustom correctChar={correctChar} errorChar={errorChar}/>
+            <Dialog
+                open={openModal}
+                onClose={handleCloseModal}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography variant={"h4"}> Ви пройшли вправу!</Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <Typography variant={"h5"}>Ваша статистика:</Typography>
+                        <List>
+                            <ListItem disableGutters disablePadding>
+                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
+                                              className={classes.statisticListItemText} secondaryTypographyProps={{
+                                    variant: "h6",
+                                    color: theme.palette.success.main
+                                }} primary={"Правильні символи:"} secondary={correctChar}/>
+                            </ListItem>
+                            <ListItem disableGutters disablePadding>
+                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
+                                              className={classes.statisticListItemText} secondaryTypographyProps={{
+                                    variant: "h6",
+                                    color: theme.palette.error.main
+                                }} primary={"Помилкові символи:"} secondary={errorChar}/>
+                            </ListItem>
+                            <ListItem disableGutters disablePadding>
+                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
+                                              className={classes.statisticListItemText} secondaryTypographyProps={{
+                                    variant: "h6",
+                                }} primary={"Усього символів:"} secondary={length}/>
+                            </ListItem>
+                            <ListItem disableGutters disablePadding>
+                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}} className={classes.statisticListItemText} secondaryTypographyProps={{
+                                    variant: "h6",
+                                }} primary={"Усього фраз:"} secondary={phase}/>
+                            </ListItem>
+                            <ListItem disableGutters disablePadding dense={false}>
+                                <ListItemText classes={{secondary: classes.statisticListItemSecondaryProps}}
+                                              className={classes.statisticListItemText} secondaryTypographyProps={{
+                                    variant: "h6",
+                                }} primary={"Загальний час"}
+                                              secondary={`${(endTime !== null && startTime !== null) && (endTime - startTime) / 1000} секунд`}/>
+                            </ListItem>
+                        </List>
+
+                        <Typography></Typography>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseModal} autoFocus>
+                        Почати знову
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
     );
 }
