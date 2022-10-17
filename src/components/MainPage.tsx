@@ -35,12 +35,12 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-    const [endGame, setEndGame] = useState(false);
-    const [totalTimeTypeWritting, setTotalTimeTypeWritting] = useState<number | null>(null);
+    const [endGame, setEndGame] = useState<boolean>(false);
+    const [totalTimeTypeWriting, setTotalTimeTypeWriting] = useState<number | null>(null);
 
-    const [openModal, setOpenModal] = React.useState(false);
+    const [openModal, setOpenModal] = React.useState<boolean>(false);
     const [animationBird, setAnimationBird] = useState<boolean>(false);
-    const [animationBirdError, setAnimationBirdError] = useState(false);
+    const [animationBirdError, setAnimationBirdError] = useState<boolean>(false);
     const openMobileHeaderDrawer = () => {
         setOpenDrawer(true);
     };
@@ -89,22 +89,22 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         actions: {insertTyping, resetTyping, deleteTyping}
     } = useTypingGame(text, {skipCurrentWordOnSpace: false, pauseOnError: true});
 
-    console.log(
-        JSON.stringify(
-            {
-                startTime,
-                endTime,
-                length,
-                currIndex,
-                currChar,
-                correctChar,
-                errorChar,
-                phase
-            },
-            null,
-            2
-        )
-    );
+    // console.log(
+    //     JSON.stringify(
+    //         {
+    //             startTime,
+    //             endTime,
+    //             length,
+    //             currIndex,
+    //             currChar,
+    //             correctChar,
+    //             errorChar,
+    //             phase
+    //         },
+    //         null,
+    //         2
+    //     )
+    // );
 
     const handleKey = useCallback((key: any) => {
         if (key === "Escape") {
@@ -158,7 +158,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     useEffect(() => {
         if (endTime !== null && startTime !== null) {
-            setTotalTimeTypeWritting((endTime - startTime) / 1000)
+            setTotalTimeTypeWriting((endTime - startTime) / 1000)
         }
     }, [endTime, startTime]);
 
@@ -175,7 +175,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     useEffect(() => {
        if (errorChar > 0) {
             setTimeout(() => (setAnimationBirdError(false)), globalVariable.animationDurationFromGlobal)
-           console.log("2222");
            setAnimationBirdError(true);
         }
     }, [errorChar]);
@@ -246,11 +245,11 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                           openDrawer={openDrawer}/>
             }
             <SnackBarCustom correctChar={correctChar} errorChar={errorChar}/>
-            {totalTimeTypeWritting &&
+            {totalTimeTypeWriting &&
             <FinishedDialog textLength={length} correctChar={correctChar} errorChar={errorChar}
                             handleCloseModal={handleCloseModal} openModal={openModal}
                             phase={phase}
-                            totalTimeTypeWritting={totalTimeTypeWritting}/>
+                            totalTimeTypeWritting={totalTimeTypeWriting}/>
             }
         </React.Fragment>
     );
