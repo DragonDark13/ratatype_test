@@ -1,25 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import header_icon_dark from '../image/dark/header_icon_dark.svg'
-import header_icon_dark_mob from '../image/dark/header_icon_dark_mob.svg'
-import burger_menu_close from '../image/burger_menu_close.svg'
 import avatar from '../image/avatar.png'
-import alba from '../image/alba.svg'
-import gold_coin from '../image/gold_coin.svg'
 import Box from '@mui/material/Box';
 
 
 import {
-    AppBar,
-    Avatar, Button,
-    Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-    Divider,
-    Drawer,
+    Avatar,
+    Container,
     Grid,
-    IconButton,
     Link,
-    List, ListItem,
-    ListItemButton,
-    ListItemText,
     Typography, useMediaQuery,
     useTheme
 } from "@mui/material";
@@ -31,6 +19,8 @@ import Header from './Header';
 import ButtonContainer from "./ButtonContainer";
 import MobileDrawer from "./MobileDrawer";
 import FinishedDialog from "./FinishedDialog";
+import {LogoBird} from "../icons";
+import globalVariable from "../utils/globalVariable";
 
 
 export interface IMainPage {
@@ -49,12 +39,8 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     const [totalTimeTypeWritting, setTotalTimeTypeWritting] = useState<number | null>(null);
 
     const [openModal, setOpenModal] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpenModal(true);
-    };
-
-
+    const [animationBird, setAnimationBird] = useState<boolean>(false);
+    const [animationBirdError, setAnimationBirdError] = useState(false);
     const openMobileHeaderDrawer = () => {
         setOpenDrawer(true);
     };
@@ -86,7 +72,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     const avatarBlock = <Link href={"#"}><Avatar alt={"avatar"} src={avatar}/></Link>;
 
     let text = "The quick brown fox jumps over the lazy dog";
-    let shortText = "The";
 
 
     const {
@@ -101,8 +86,8 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
             startTime,
             endTime
         },
-        actions: {insertTyping, resetTyping, deleteTyping, endTyping}
-    } = useTypingGame(shortText, {skipCurrentWordOnSpace: false, pauseOnError: true});
+        actions: {insertTyping, resetTyping, deleteTyping}
+    } = useTypingGame(text, {skipCurrentWordOnSpace: false, pauseOnError: true});
 
     console.log(
         JSON.stringify(
@@ -172,11 +157,29 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     }
 
     useEffect(() => {
-
-        if (endTime !== null && startTime !== null){
+        if (endTime !== null && startTime !== null) {
             setTotalTimeTypeWritting((endTime - startTime) / 1000)
         }
     }, [endTime, startTime]);
+
+
+    useEffect(() => {
+        if (correctChar > 0) {
+            setAnimationBirdError(false);
+
+            setTimeout(() => (setAnimationBird(false)), globalVariable.animationDurationFromGlobal)
+            setAnimationBird(true);
+        }
+    }, [correctChar]);
+
+    useEffect(() => {
+       if (errorChar > 0) {
+            setTimeout(() => (setAnimationBirdError(false)), globalVariable.animationDurationFromGlobal)
+           console.log("2222");
+           setAnimationBirdError(true);
+        }
+    }, [errorChar]);
+
 
 
     return (
@@ -198,7 +201,8 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                 <Container>
                     <Grid spacing={5} container alignItems={"center"} flexWrap={"nowrap"}>
                         <Grid item xs={'auto'}>
-                            <img className={classes.albaIcon} src={alba} alt="alba"/>
+                            {/*TODO add svg icon as material Ui SVG with props*/}
+                            <LogoBird animationBirdError={animationBirdError} animation={animationBird}/>
                         </Grid>
                         <Grid className={classes.typedTextContainer} item>
                             <Typography
@@ -207,7 +211,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
                             >
 
-                                {shortText.split("").map((char: string, index: number) => {
+                                {text.split("").map((char: string, index: number) => {
                                     let state = charsState[index];
                                     let color = state === 0 ? theme.palette.primary.main : state === 1 ? theme.palette.success.main : theme.palette.error.main;
                                     if (index > (currIndex - 1) && !endGame) {
@@ -242,10 +246,11 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                           openDrawer={openDrawer}/>
             }
             <SnackBarCustom correctChar={correctChar} errorChar={errorChar}/>
-            {totalTimeTypeWritting && <FinishedDialog textLength={length} correctChar={correctChar} errorChar={errorChar}
-                                                      handleCloseModal={handleCloseModal} openModal={openModal}
-                                                      phase={phase}
-                                                      totalTimeTypeWritting={totalTimeTypeWritting}/>
+            {totalTimeTypeWritting &&
+            <FinishedDialog textLength={length} correctChar={correctChar} errorChar={errorChar}
+                            handleCloseModal={handleCloseModal} openModal={openModal}
+                            phase={phase}
+                            totalTimeTypeWritting={totalTimeTypeWritting}/>
             }
         </React.Fragment>
     );

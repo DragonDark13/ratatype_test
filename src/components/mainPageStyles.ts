@@ -1,14 +1,46 @@
-import {Theme} from "@mui/material";
+import {keyframes, Theme} from "@mui/material";
 import {customGridWidth} from "../utils/mixinsForStyle";
 import {alpha} from "@mui/material/styles";
 import themeDark from "../styles/themeDark";
 import {makeStyles} from 'tss-react/mui';
+import globalVariable from "../utils/globalVariable";
+
+const myEffectTopJaw = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-15deg);
+  }
+`;
+
+const myEffectBottomJaw = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(30deg);
+  }
+`;
+
+const myEffectBirdBody = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+`;
 
 
 const albaImgSmSize = 96;
 const albaContainerSmSize = albaImgSmSize + 24;
 const albaImgMdSize = 176;
 const albaContainerMdSize = albaImgMdSize + 24;
+
+const animationDuration = globalVariable.animationDurationFromGlobal;
+const animationFillMode = "none"
+
 
 export const useMainPageStyles = makeStyles()((theme: Theme) => ({
 
@@ -51,14 +83,57 @@ export const useMainPageStyles = makeStyles()((theme: Theme) => ({
         paddingBottom: theme.spacing(3),
         paddingTop: "146px",
     },
+
     "albaIcon": {
         display: "block",
+
+        "& path, & rect, & circle": {
+            transition: "all 0.2s ease-out",
+        },
+
         [theme.breakpoints.up('sm')]: {
-            width: albaImgSmSize,
+            fontSize: albaImgSmSize,
         },
         [theme.breakpoints.up('md')]: {
-            width: albaImgMdSize,
+            fontSize: albaImgMdSize,
         },
+        "&.typeError": {
+            "& path, & rect, & circle": {
+                fill: "gray",
+            },
+        },
+
+        "& .body,& .upperJaw,& .bottomJaw": {
+            transformBox: "fill-box",
+        },
+
+
+        "& .body": {
+            transformOrigin: "center",
+
+            "&.bodyAnimation": {
+                animation: `${myEffectBirdBody} ${animationDuration}ms ${theme.transitions.easing.easeInOut} ${animationFillMode}`,
+            },
+        },
+
+        "& .upperJaw": {
+            transformOrigin: "bottom left",
+
+            "&.upperJawAnimation": {
+                animation: `${myEffectTopJaw} ${animationDuration}ms ${theme.transitions.easing.easeInOut} ${animationFillMode}`,
+            },
+        },
+
+
+        "& .bottomJaw": {
+            transformOrigin: "left top",
+
+            "&.bottomJawAnimation": {
+                animation: `${myEffectBottomJaw} ${animationDuration}ms ${theme.transitions.easing.easeInOut} ${animationFillMode}`,
+            },
+        },
+
+
     },
     "driverAppBarContainer": {
         [theme.breakpoints.up('sm')]: {
@@ -185,7 +260,6 @@ export const useMainPageStyles = makeStyles()((theme: Theme) => ({
     },
 
     "statisticListItemSecondaryProps": {
-        // color: theme.palette.primary.main,
         fontWeight: 700,
     },
 
