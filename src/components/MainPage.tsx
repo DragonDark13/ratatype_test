@@ -200,7 +200,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                 <Container>
                     <Grid spacing={5} container alignItems={"center"} flexWrap={"nowrap"}>
                         <Grid item xs={'auto'}>
-                            {/*TODO add svg icon as material Ui SVG with props*/}
                             <LogoBird animationBirdError={animationBirdError} animation={animationBird}/>
                         </Grid>
                         <Grid className={classes.typedTextContainer} item>
