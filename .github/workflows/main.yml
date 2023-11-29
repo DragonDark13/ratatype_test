@@ -5,9 +5,6 @@ on:
     branches:
       - master
 
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,12 +12,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '14'
 
-      - name: Install and Build 🔧
+      - name: Install Dependencies and Build
         run: |
           npm ci
           npm run build
@@ -36,4 +34,4 @@ jobs:
           folder: ./build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: /home/runner/work/ratatype_test/ratatype_test
+        working-directory: /home/runner/work/ratatype_test/ratatype_test
