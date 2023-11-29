@@ -18,6 +18,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: '20'
+
       - name: Install and Build 🔧
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,4 +52,4 @@ jobs:
         with:
           branch: gh-pages
           folder: ./build
-        working-directory: /home/runner/work/ratatype_test/ratatype_test
+          working-directory: /home/runner/work/ratatype_test/ratatype_test
