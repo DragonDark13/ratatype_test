@@ -45,6 +45,10 @@ jobs:
           echo "Environment Variables:"
           env
 
+
+      - name: Create Build Directory
+        run: mkdir -p ./build
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         env:
