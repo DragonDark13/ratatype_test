@@ -15,17 +15,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
       - name: Install and Build 🔧
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm ci
           npm run build
@@ -36,21 +31,8 @@ jobs:
     steps:
       - name: Create Build Directory
         run: mkdir -p ./build
-      - name: Debug Information
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          pwd
-          ls -la
-          echo "Contents of the 'build' Directory:"
-          ls -la build
-          echo "Environment Variables:"
-          env
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: gh-pages
-          folder: ./build
-          working-directory: /home/runner/work/ratatype_test/ratatype_test
+          folder: build
