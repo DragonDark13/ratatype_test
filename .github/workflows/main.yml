@@ -20,8 +20,9 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-        working-directory: ../../src
-#        '/home/runner/work/ratatype_test/ratatype_test/./src
+        working-directory: ./
+#        '/home/runner/work/ratatype_test/ratatype_test/./src ./src
+#      - /home/runner/work/ratatype_test/ratatype_test/../../src ../../src
 
 
       - name: Build React App
