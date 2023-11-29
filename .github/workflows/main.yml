@@ -6,7 +6,7 @@
     ls -la /home/runner/work/ratatype_test/ratatype_test
     npm --version
     node --version
-    npm list
+    npm list:
 
 on:
   push:
