@@ -1,4 +1,12 @@
-name: Deploy to GitHub Pages
+- name: Debug Information
+  run: |
+    pwd
+    ls -la
+    ls -la /
+    ls -la /home/runner/work/ratatype_test/ratatype_test
+    npm --version
+    node --version
+    npm list
 
 on:
   push:
