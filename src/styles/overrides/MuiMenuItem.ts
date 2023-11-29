@@ -10,4 +10,5 @@ const MuiMenuItem = {
         }
     }
 }
+
 export default MuiMenuItem;
