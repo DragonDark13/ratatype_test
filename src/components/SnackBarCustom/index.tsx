@@ -35,28 +35,27 @@ const SnackBarCustom = ({correctChar, errorChar}: ISnackBar) => {
     });
 
 
-    React.useEffect(() => {
-        if (errorChar) {
-            setSnackBarChildren(<SnackBarError handleSnackbarClose={handleSnackbarClose} message={"Помиляйтесь," +
-            " але їдіть вперед!"}/>);
-            setSnackBarState({...snackBarState, open: true, autoHideDuration: 5000});
-        }
-    }, [errorChar]);
+    const handleSnackbarClose = () => {
+        setSnackBarState({...snackBarState, open: false, autoHideDuration: 5000});
+    };
 
     React.useEffect(() => {
         if (correctChar) {
             setSnackBarChildren(
                 <SnackBarSuccessMessage handleSnackbarClose={handleSnackbarClose} message={"Ви чудові"}/>
             );
-            setSnackBarState({...snackBarState, open: true, autoHideDuration: 5000});
+            setSnackBarState(prevState => ({...prevState, open: true, autoHideDuration: 5000}));
         }
-    }, [correctChar]);
+    }, [correctChar, handleSnackbarClose, setSnackBarState]);
 
 
-    const handleSnackbarClose = () => {
-        setSnackBarState({...snackBarState, open: false, autoHideDuration: 5000});
-    };
-
+    React.useEffect(() => {
+        if (errorChar) {
+            setSnackBarChildren(<SnackBarError handleSnackbarClose={handleSnackbarClose}
+                                               message={"Помиляйтесь, але їдіть вперед!"}/>);
+            setSnackBarState(prevState => ({...prevState, open: true, autoHideDuration: 5000}));
+        }
+    }, [errorChar, handleSnackbarClose, setSnackBarState]);
 
     return (
         <Snackbar
