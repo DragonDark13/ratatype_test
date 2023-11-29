@@ -3,7 +3,7 @@ import {themeSpacing} from '../constants';
 
 const breakpoints = createBreakpoints({});
 
-export default {
+const MuiContainer ={
     styleOverrides: {
         root: {
             paddingLeft: themeSpacing[3] + "px",
@@ -18,7 +18,6 @@ export default {
                 paddingRight: "75px",
             }
         },
-
-
     }
 }
+export default MuiContainer;

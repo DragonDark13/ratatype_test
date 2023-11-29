@@ -1,4 +1,4 @@
-export default {
-        fontFamily: ['Montserrat', 'Helvetica', 'Arial', 'sans-serif'].join(','),
-
+const typography = {
+    fontFamily: ['Montserrat', 'Helvetica', 'Arial', 'sans-serif'].join(','),
 }
+export default typography;

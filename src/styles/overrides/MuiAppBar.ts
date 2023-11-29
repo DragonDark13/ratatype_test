@@ -3,7 +3,7 @@ import {themeSpacing} from '../constants';
 
 const breakpoints = createBreakpoints({});
 
-export default {
+const MuiAppBar ={
     styleOverrides: {
 
         root: {
@@ -23,3 +23,5 @@ export default {
         },
     }
 }
+
+export default MuiAppBar;

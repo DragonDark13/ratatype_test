@@ -1,6 +1,6 @@
 import {themeSpacing} from '../constants';
 
-export default {
+const MuiPopover = {
     styleOverrides: {
 
         paper: {
@@ -8,3 +8,4 @@ export default {
         }
     },
 };
+export default MuiPopover;

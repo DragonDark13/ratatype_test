@@ -6,7 +6,7 @@ import MuiPopover from './MuiPopover';
 import MuiMenuItem from './MuiMenuItem';
 
 
-export default {
+const overrides ={
     MuiIconButton,
     MuiAppBar,
     MuiDrawer,
@@ -14,3 +14,5 @@ export default {
     MuiPopover,
     MuiMenuItem
 };
+
+export default overrides;

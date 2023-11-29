@@ -1,4 +1,4 @@
-export default {
+const  MuiDrawer={
     styleOverrides: {
         paper: {
             color: "#fff",
@@ -6,3 +6,4 @@ export default {
         },
     }
 }
+export default  MuiDrawer;

@@ -5,7 +5,7 @@ export const COLORS = {
     white: "#fff"
 };
 
-export default {
+const  palette ={
     primary: {
         light: COLORS.white,
         main: COLORS.white,
@@ -24,3 +24,5 @@ export default {
         hover: alpha(COLORS.white, 0.1),
     }
 };
+
+export default palette;

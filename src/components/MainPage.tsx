@@ -79,7 +79,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
             charsState,
             length,
             currIndex,
-            currChar,
             correctChar,
             errorChar,
             phase,
@@ -89,22 +88,6 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         actions: {insertTyping, resetTyping, deleteTyping}
     } = useTypingGame(text, {skipCurrentWordOnSpace: false, pauseOnError: true});
 
-    // console.log(
-    //     JSON.stringify(
-    //         {
-    //             startTime,
-    //             endTime,
-    //             length,
-    //             currIndex,
-    //             currChar,
-    //             correctChar,
-    //             errorChar,
-    //             phase
-    //         },
-    //         null,
-    //         2
-    //     )
-    // );
 
     const handleKey = useCallback((key: any) => {
         if (key === "Escape") {

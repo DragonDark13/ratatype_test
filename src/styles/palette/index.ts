@@ -4,7 +4,7 @@ export const COLORS = {
     white:"#fff"
 };
 
-export default {
+const palette ={
     primary: {
         light: COLORS.primaryDeepSky,
         main: COLORS.prussianBlue,
@@ -19,3 +19,6 @@ export default {
         hover:"#F3F5F7",
     }
 };
+
+
+export default palette
