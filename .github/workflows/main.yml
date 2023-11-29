@@ -20,12 +20,12 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-        working-directory: ../../
+        working-directory: ../../../ratatype_test
 
 
       - name: Build React App
         run: npm run build
-        working-directory: ../../
+        working-directory: ../../../ratatype_test
 
 
   deploy:
