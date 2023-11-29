@@ -29,10 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Create Build Directory
-        run: mkdir -p ./build
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           branch: gh-pages
-          folder: build
+          folder: ./build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: /home/runner/work/ratatype_test/ratatype_test
