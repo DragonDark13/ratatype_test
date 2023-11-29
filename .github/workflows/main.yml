@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+      -
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -11,10 +14,12 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: npm install && npm run build
+      - name: Install and Build 🔧
+        run: |
+            npm ci
+            npm run build
 
   deploy:
     runs-on: ubuntu-latest
