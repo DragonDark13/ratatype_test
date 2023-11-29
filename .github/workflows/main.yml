@@ -16,18 +16,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-           node-version: 16
+          node-version: 16
 
-        - name: Install Dependencies
-          run: npm install
-#        working-directory: ./
-#        '/home/runner/work/ratatype_test/ratatype_test/./src ./src
-#      - /home/runner/work/ratatype_test/ratatype_test/../../src ../../src
-#npm ERR! enoent ENOENT: no such file or directory, open '/home/runner/work/ratatype_test/ratatype_test/package.json'
+      - name: Install Dependencies
+            run: npm install
 
       - name: Build React App
         run: npm run build
-#        working-directory: ./src
+  #        working-directory: ./src
 
 
   deploy:
