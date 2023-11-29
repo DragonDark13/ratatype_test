@@ -34,4 +34,4 @@ jobs:
           folder: ./build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: /home/runner/work/ratatype_test/ratatype_test
+          working-directory: /home/runner/work/ratatype_test/ratatype_test
