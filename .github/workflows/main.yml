@@ -33,9 +33,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Working Directory: $(pwd)"
-          echo "Contents of the Working Directory:"
+          pwd
           ls -la
+          echo "Contents of the 'build' Directory:"
+          ls -la build
           echo "Environment Variables:"
           env
 
