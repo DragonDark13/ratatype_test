@@ -34,6 +34,17 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     const {classes} = useMainPageStyles();
     const buttonContainerRef = useRef<HTMLButtonElement | null>(null);
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            // Use the non-null assertion here
+            inputRef.current!.focus();
+        }, 100);
+
+        return () => clearTimeout(timeoutId);
+    }, []); // Empty dependency array ensures it runs once on mount
+
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
     const [endGame, setEndGame] = useState<boolean>(false);
@@ -192,30 +203,32 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                             <LogoBird animationBirdError={animationBirdError} animation={animationBird}/>
                         </Grid>
                         <Grid className={classes.typedTextContainer} item>
-                            <input type={"text"} autoFocus={true} style={{opacity: 0, height: 0, width: 0}}/>
-                            <Typography
-                                variant={'inherit'}
-                                className={classes.typedTextElem}
+                            <input
+                                ref={inputRef}
+                                style={{position: 'absolute', left: '-9999px', opacity: 0}}
+                            /> <Typography
+                            variant={'inherit'}
+                            className={classes.typedTextElem}
 
-                            >
+                        >
 
-                                {text.split("").map((char: string, index: number) => {
-                                    let state = charsState[index];
-                                    let color = state === 0 ? theme.palette.primary.main : state === 1 ? theme.palette.success.main : theme.palette.error.main;
-                                    if (index > (currIndex - 1) && !endGame) {
-                                        return (
-                                            <span
-                                                key={char + index}
-                                                style={{color}}
-                                                className={currIndex + 1 === index ? classes.currLetter : undefined}
-                                            >
+                            {text.split("").map((char: string, index: number) => {
+                                let state = charsState[index];
+                                let color = state === 0 ? theme.palette.primary.main : state === 1 ? theme.palette.success.main : theme.palette.error.main;
+                                if (index > (currIndex - 1) && !endGame) {
+                                    return (
+                                        <span
+                                            key={char + index}
+                                            style={{color}}
+                                            className={currIndex + 1 === index ? classes.currLetter : undefined}
+                                        >
                                                   {char}
                                                 </span>
-                                        );
+                                    );
 
-                                    } else return null
-                                })}
-                            </Typography>
+                                } else return null
+                            })}
+                        </Typography>
                         </Grid>
                     </Grid>
                     {!smUp && <ButtonContainer
