@@ -140,7 +140,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         }
 
         if (buttonContainerRef.current) {
-            console.log("buttonContainerRef.current",buttonContainerRef.current);
+            console.log("buttonContainerRef.current", buttonContainerRef.current);
             buttonContainerRef.current.blur();
         }
     }
@@ -192,6 +192,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                             <LogoBird animationBirdError={animationBirdError} animation={animationBird}/>
                         </Grid>
                         <Grid className={classes.typedTextContainer} item>
+                            <input autoFocus style={{opacity: 0, height: 0, width: 0}}/>
                             <Typography
                                 variant={'inherit'}
                                 className={classes.typedTextElem}
