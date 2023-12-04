@@ -10,7 +10,7 @@ const GlobalCssLight ={
       margin: 0,
       padding: 0,
       color: themeLight.palette.primary.contrastText,
-      '-webkit-font-smoothing': 'antialiased'
+      WebkitFontSmoothing: 'antialiased'
     },
 
 };

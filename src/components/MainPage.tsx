@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import avatar from '../image/avatar.png'
 import Box from '@mui/material/Box';
 
@@ -32,6 +32,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     const theme = useTheme();
     const {classes} = useMainPageStyles();
+    const buttonContainerRef = useRef<HTMLButtonElement | null>(null);
 
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
@@ -137,6 +138,11 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
         } else {
             setThemeCurrent("light")
         }
+
+        if (buttonContainerRef.current) {
+            console.log("buttonContainerRef.current",buttonContainerRef.current);
+            buttonContainerRef.current.blur();
+        }
     }
 
     useEffect(() => {
@@ -156,12 +162,11 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
     }, [correctChar]);
 
     useEffect(() => {
-       if (errorChar > 0) {
+        if (errorChar > 0) {
             setTimeout(() => (setAnimationBirdError(false)), globalVariable.animationDurationFromGlobal)
-           setAnimationBirdError(true);
+            setAnimationBirdError(true);
         }
     }, [errorChar]);
-
 
 
     return (
@@ -170,6 +175,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                     avatarBlock={avatarBlock}
                     buttonContainer={
                         <ButtonContainer
+                            ref={buttonContainerRef}
                             onSwitchTheme={onSwitchTheme}
                             resetTyping={resetTyping}
                             themeCurrent={themeCurrent}/>

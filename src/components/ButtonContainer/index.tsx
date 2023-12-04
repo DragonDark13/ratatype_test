@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {Grid, IconButton, useMediaQuery, useTheme} from "@mui/material";
 import {useMainPageStyles} from "../mainPageStyles";
 import restart from "../../image/restart.svg";
 import dark_mode from "../../image/dark_mode.svg";
 import light_mode from "../../image/light_mode.svg";
 
-interface IButtonContainer {
+interface IButtonContainerProps {
     resetTyping: () => void;
     onSwitchTheme: () => void;
     themeCurrent: "dark" | "light";
 
 }
 
-const ButtonContainer = ({resetTyping, onSwitchTheme, themeCurrent}: IButtonContainer) => {
+const ButtonContainer = forwardRef<HTMLButtonElement, IButtonContainerProps>(
+  ({ resetTyping, onSwitchTheme, themeCurrent }, ref) => {
     const theme = useTheme();
 
-    const {classes} = useMainPageStyles();
+      console.log(ref);
+      const {classes} = useMainPageStyles();
     const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+        console.log("key:", event.code);
+        if (event.code === "Space") {
+            event.preventDefault();
+        }
+    };
 
 
     const restartBtn = <IconButton
@@ -28,6 +37,8 @@ const ButtonContainer = ({resetTyping, onSwitchTheme, themeCurrent}: IButtonCont
 
     const SwitchThemeModeBtn =
         <IconButton
+            ref={ref}
+            onKeyDown={handleKeyPress}
             onClick={onSwitchTheme}
             size={"small"}
         >
@@ -56,6 +67,6 @@ const ButtonContainer = ({resetTyping, onSwitchTheme, themeCurrent}: IButtonCont
             </Grid>
         </Grid>
     );
-};
+});
 
 export default ButtonContainer;
