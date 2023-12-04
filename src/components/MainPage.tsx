@@ -192,7 +192,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                             <LogoBird animationBirdError={animationBirdError} animation={animationBird}/>
                         </Grid>
                         <Grid className={classes.typedTextContainer} item>
-                            <input autoFocus style={{opacity: 0, height: 0, width: 0}}/>
+                            <input type={"text"} autoFocus={true} style={{opacity: 0, height: 0, width: 0}}/>
                             <Typography
                                 variant={'inherit'}
                                 className={classes.typedTextElem}
