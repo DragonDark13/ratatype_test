@@ -69,7 +69,7 @@ const SnackBarCustom = ({correctChar, errorChar}: ISnackBar) => {
     // }, [errorChar, setSnackBarState, snackBarState]);
 
     useEffect(() => {
-        if (correctChar) {
+        if (errorChar) {
             setSnackBarChildren(
                 <SnackBarError
 
