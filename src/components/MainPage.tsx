@@ -38,12 +38,14 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            // Use the non-null assertion here
-            inputRef.current!.focus();
+            // Check if inputRef.current is not null before calling focus
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
         }, 100);
 
         return () => clearTimeout(timeoutId);
-    }, []); // Empty dependency array ensures it runs once on mount
+    }, []);
 
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
@@ -205,7 +207,7 @@ const MainPage = ({themeCurrent, setThemeCurrent}: IMainPage) => {
                         <Grid className={classes.typedTextContainer} item>
                             <input
                                 ref={inputRef}
-                                style={{position: 'absolute', left: '-9999px', opacity: 0}}
+                                style={{position: 'absolute', left: '-9999px'}}
                             /> <Typography
                             variant={'inherit'}
                             className={classes.typedTextElem}
